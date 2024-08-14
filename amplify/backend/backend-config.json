@@ -1,0 +1,9 @@
+{
+  "function": {
+    "giftformd3abc30f": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}

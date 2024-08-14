@@ -1,0 +1,22 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-giftform-dev-8b7ea-authRole",
+      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-8b7ea-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-8b7ea-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-giftform-dev-8b7ea-deployment",
+      "UnauthRoleName": "amplify-giftform-dev-8b7ea-unauthRole",
+      "StackName": "amplify-giftform-dev-8b7ea",
+      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-dev-8b7ea/75392c10-59f7-11ef-a9ce-0affcdd81315",
+      "AmplifyAppId": "d2k4ehevzrbdem"
+    }
+  },
+  "function": {
+    "giftformd3abc30f": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
