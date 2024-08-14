@@ -32,7 +32,49 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* CSS file (e.g., styles.css) */
+
+/* Styles for mobile screens (max-width: 767px) */
+@media only screen and (max-width: 767px) {
+  .grid-container {
+    padding: 10px;
+  }
+
+  .tiles-item img {
+    max-width: 100%;
+  }
+
+  .form-container {
+    padding: 15px;
+  }
+
+  .grid-definition-mobile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Styles for desktop screens (min-width: 768px) */
+@media only screen and (min-width: 1000px) {
+  .grid-container {
+    padding: 20px;
+  }
+
+  .tiles-item img {
+    max-width: 100%;
+  }
+
+  .form-container {
+    padding: 30px;
+  }
+
+  .grid-definition-desktop {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

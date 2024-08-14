@@ -11,9 +11,9 @@ import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
 import Textarea from "@cloudscape-design/components/textarea";
 import Select from "@cloudscape-design/components/select";
+import './App.css';  // Import your CSS file
 
 export default function ContentLayoutComponent() {
-
     const [value, setValue] = React.useState("gift-items");
     const [selectedOption, setSelectedOption] = React.useState({ label: "Option 1", value: "1" });
     const [name, setName] = React.useState("");
@@ -64,13 +64,15 @@ export default function ContentLayoutComponent() {
                 header={<Header variant="h1">Nhận quà Cloud Day 2024 </Header>}
             >
             </ContentLayout>
-            <div style={{ paddingTop: "20px", paddingLeft: "250px" }}>
-                <Grid gridDefinition={[{ colspan: 5 }, { colspan: 5 }]}>
+            <div className="grid-container">
+                <Grid
+                    className={window.innerWidth < 768 ? "grid-definition-mobile" : "grid-definition-desktop"}
+                >
                     <div style={{ paddingTop: "50px" }}>
                         <Tiles
                             onChange={({ detail }) => setValue(detail.value)}
                             value={value}
-                            columns={4}
+                            columns={window.innerWidth < 768 ? 2 : 4}  // Responsive columns
                             items={[
                                 {
                                     label: "Item 1",
@@ -78,6 +80,7 @@ export default function ContentLayoutComponent() {
                                         <img
                                             src="/image-placeholder.png"
                                             alt="placeholder"
+                                            className="tiles-item"
                                         />
                                     ),
                                     value: "gift-items"
@@ -88,6 +91,7 @@ export default function ContentLayoutComponent() {
                                         <img
                                             src="/image-placeholder.png"
                                             alt="placeholder"
+                                            className="tiles-item"
                                         />
                                     ),
                                     value: "item2"
@@ -98,6 +102,7 @@ export default function ContentLayoutComponent() {
                                         <img
                                             src="/image-placeholder.png"
                                             alt="placeholder"
+                                            className="tiles-item"
                                         />
                                     ),
                                     value: "item3"
@@ -108,6 +113,7 @@ export default function ContentLayoutComponent() {
                                         <img
                                             src="/image-placeholder.png"
                                             alt="placeholder"
+                                            className="tiles-item"
                                         />
                                     ),
                                     value: "item4"
@@ -117,7 +123,7 @@ export default function ContentLayoutComponent() {
                     </div>
 
                     <div>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="form-container">
                             <Form
                                 actions={
                                     <SpaceBetween direction="horizontal" size="xs">
@@ -127,7 +133,6 @@ export default function ContentLayoutComponent() {
                                         <Button variant="primary" type="submit">Submit</Button>
                                     </SpaceBetween>
                                 }
-                            // header={<Header variant="h1">Thông tin nhận quà</Header>}
                             >
                                 <Container
                                     header={<Header variant="h2">Form Thông tin nhận quà</Header>}
