@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+.grid-definition {
+  margin-left: 1rem;
+}
+
+.tile{
+  padding-top: 50px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -44,18 +52,22 @@
 /* Styles for mobile screens (max-width: 767px) */
 @media only screen and (max-width: 767px) {
   .grid-container {
-    padding: 10px;
+    padding: 15px;
   }
 
   .tiles-item img {
     max-width: 100%;
   }
 
-  .form-container {
+  .tile, .form-container {
     padding: 15px;
   }
 
-  .grid-definition-mobile {
+  .tile{
+    padding-top: 20px;
+  }
+
+  .grid-definition {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -74,7 +86,7 @@
     padding: 30px;
   }
 
-  .grid-definition-desktop {
+  .grid-definition {
     grid-template-columns: repeat(4, 1fr);
   }
 }
