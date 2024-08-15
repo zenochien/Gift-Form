@@ -1,57 +1,16 @@
-.App {
-  text-align: center;
-}
+/* App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* General styles */
+.content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-.grid-definition {
-  margin-left: 1rem;
-}
-
-.tile{
-  padding-top: 50px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-/* CSS file (e.g., styles.css) */
 
 /* Styles for mobile screens (max-width: 767px) */
 @media only screen and (max-width: 767px) {
-  .grid-container {
+  .content-container {
     padding: 15px;
   }
 
@@ -59,34 +18,58 @@
     max-width: 100%;
   }
 
-  .tile, .form-container {
+  .tile,
+  .form-container {
     padding: 15px;
+    width: 100%;
   }
 
-  .tile{
+  .tile {
     padding-top: 20px;
   }
 
-  .grid-definition {
-    grid-template-columns: repeat(2, 1fr);
+  .header-content {
+    text-align: center;
   }
 }
 
 /* Styles for desktop screens (min-width: 768px) */
-@media only screen and (min-width: 1000px) {
-  .grid-container {
-    padding: 20px;
+@media only screen and (min-width: 768px) {
+  .content-container {
+    justify-content: space-between;
   }
 
-  .tiles-item img {
-    max-width: 100%;
-  }
+
 
   .form-container {
+    flex: 1;
     padding: 30px;
+    max-width: 500px;
+    width: -webkit-fill-available;
   }
 
-  .grid-definition {
-    grid-template-columns: repeat(4, 1fr);
+  .header-content {
+    text-align: center;
   }
+
+  .tiles-container {
+    width: 900px;
+
+    flex: 2;
+    justify-content: center;
+    background-color: rgba(240, 255, 255, 0.443);
+  }
+
+  .tiles-item {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .tile {
+    padding-top: 3px;
+  }
+
+
 }
