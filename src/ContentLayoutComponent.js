@@ -24,7 +24,6 @@ export default function ContentLayoutComponent() {
     const [surname, setSurname] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [notes, setNotes] = React.useState("");
-    const [address, setAddress] = React.useState("");
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null); // State for success/error alert
     const [registeredEmails, setRegisteredEmails] = React.useState([]); // State to store registered emails
@@ -58,7 +57,6 @@ export default function ContentLayoutComponent() {
                 setSurname("");
                 setEmail("");
                 setNotes("");
-                setAddress("");
                 setAlert({
                     type: "success",
                     header: "Đăng ký thành công",
@@ -128,9 +126,6 @@ export default function ContentLayoutComponent() {
                     />
                 </div>
 
-                <ContentLayout headerVariant="divider">
-
-                </ContentLayout>
 
                 <div className="form-container">
                     {/* Alert for success or error */}
