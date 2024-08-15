@@ -105,7 +105,7 @@ export default function ContentLayoutComponent() {
                                 label: "Áo FCJ",
                                 image: (
                                     <img
-                                        src="/images/1.jpeg"
+                                        src="/images/1.png"
                                         alt="bootle"
                                         className="tiles-item"
                                     />
@@ -127,7 +127,7 @@ export default function ContentLayoutComponent() {
                                 label: "Nón FCJ",
                                 image: (
                                     <img
-                                        src="/images/3.jpeg"
+                                        src="/images/3.png"
                                         alt="shirt"
                                         className="tiles-item"
                                     />
