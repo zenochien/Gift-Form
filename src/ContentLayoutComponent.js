@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import ContentLayout from "@cloudscape-design/components/content-layout";
 import Container from "@cloudscape-design/components/container";
 import Header from "@cloudscape-design/components/header";
@@ -27,6 +27,9 @@ export default function ContentLayoutComponent() {
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null); // State for success/error alert
     const [registeredEmails, setRegisteredEmails] = React.useState([]); // State to store registered emails
+
+    // Create a ref for the form container
+    const formRef = useRef(null);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -68,6 +71,15 @@ export default function ContentLayoutComponent() {
         }
     };
 
+    const handleTileChange = ({ detail }) => {
+        setValue(detail.value);
+
+        // Scroll to the form when a tile is selected
+        if (formRef.current) {
+            formRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <>
             <ContentLayout
@@ -84,7 +96,7 @@ export default function ContentLayoutComponent() {
             <div className="content-container">
                 <div className="tiles-container">
                     <Tiles
-                        onChange={({ detail }) => setValue(detail.value)}
+                        onChange={handleTileChange}  // Use handleTileChange to trigger scroll
                         className="tile"
                         value={value}
                         ariaRequired
@@ -126,8 +138,7 @@ export default function ContentLayoutComponent() {
                     />
                 </div>
 
-
-                <div className="form-container">
+                <div className="form-container" ref={formRef}>
                     {/* Alert for success or error */}
                     {alert && (
                         <Alert
