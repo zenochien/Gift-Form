@@ -31,6 +31,11 @@
   .header-content {
     text-align: center;
   }
+
+  .alert {
+    padding: 10px;
+    align-items: center;
+  }
 }
 
 /* Styles for desktop screens (min-width: 768px) */
@@ -71,5 +76,7 @@
     padding-top: 3px;
   }
 
-
+  .alert {
+    padding: 20px;
+  }
 }

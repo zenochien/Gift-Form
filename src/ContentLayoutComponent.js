@@ -10,7 +10,8 @@ import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
 import Textarea from "@cloudscape-design/components/textarea";
 import Select from "@cloudscape-design/components/select";
-import "./App.css"; // Import your CSS file
+import Alert from "@cloudscape-design/components/alert"; // Add Alert component for notifications
+import "./App.css";
 import { Box } from "@cloudscape-design/components";
 
 export default function ContentLayoutComponent() {
@@ -25,47 +26,47 @@ export default function ContentLayoutComponent() {
     const [notes, setNotes] = React.useState("");
     const [address, setAddress] = React.useState("");
     const [errors, setErrors] = React.useState({});
-    const [isMobile, setIsMobile] = React.useState(false);
-
-    React.useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 500);
-        };
-
-        window.addEventListener("resize", handleResize);
-        handleResize(); // Set initial state based on current window size
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    const [alert, setAlert] = React.useState(null); // State for success/error alert
+    const [registeredEmails, setRegisteredEmails] = React.useState([]); // State to store registered emails
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const newErrors = {};
 
         if (!name) {
-            newErrors.name = "Name is required";
+            newErrors.name = "Bắt buộc Họ và tên";
         }
         if (!surname) {
-            newErrors.surname = "Surname is required";
+            newErrors.surname = "Bắt buộc số điện thoại";
         }
         if (!email) {
-            newErrors.email = "Email is required";
+            newErrors.email = "Bắt buộc email";
         }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
+            if (registeredEmails.includes(email)) {
+                setAlert({
+                    type: "error",
+                    header: "Đăng ký không thành công",
+                    content: "Email này đã được đăng ký.",
+                });
+            } else {
+                setRegisteredEmails((prev) => [...prev, email]);
+                setName("");
+                setSurname("");
+                setEmail("");
+                setNotes("");
+                setAddress("");
+                setAlert({
+                    type: "success",
+                    header: "Đăng ký thành công",
+                    content: "Đăng ký của bạn đã thành công!",
+                });
+            }
+
             setErrors({});
-            // Handle form submission logic here
-            console.log("Form submitted:", {
-                value,
-                selectedOption,
-                name,
-                surname,
-                email,
-                address,
-                notes,
-            });
         }
     };
 
@@ -130,14 +131,25 @@ export default function ContentLayoutComponent() {
                 <ContentLayout headerVariant="divider">
 
                 </ContentLayout>
+
                 <div className="form-container">
+                    {/* Alert for success or error */}
+                    {alert && (
+                        <Alert
+                            className="alert"
+                            type={alert.type}
+                            header={alert.header}
+                            dismissible
+                            onDismiss={() => setAlert(null)}
+                        >
+                            {alert.content}
+                        </Alert>
+                    )}
+
                     <form onSubmit={handleSubmit}>
                         <Form
                             actions={
                                 <SpaceBetween direction="horizontal" size="xs">
-                                    <Button formAction="none" variant="link">
-                                        Cancel
-                                    </Button>
                                     <Button variant="primary" type="submit">
                                         Submit
                                     </Button>
@@ -187,6 +199,7 @@ export default function ContentLayoutComponent() {
                                                 { label: "Áo 2XL", value: "5" },
                                                 { label: "Áo 3XL", value: "6" },
                                             ]}
+                                            disabled={value !== "gift-items"}
                                         />
                                     </FormField>
 
