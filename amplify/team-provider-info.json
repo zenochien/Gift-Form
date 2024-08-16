@@ -30,5 +30,26 @@
         "S3friendlyName": {}
       }
     }
+  },
+  "gift": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-giftform-gift-6e471-authRole",
+      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-gift-6e471-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-gift-6e471-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-giftform-gift-6e471-deployment",
+      "UnauthRoleName": "amplify-giftform-gift-6e471-unauthRole",
+      "StackName": "amplify-giftform-gift-6e471",
+      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-gift-6e471/11ab38d0-5bca-11ef-ad6c-12faf8a53b93",
+      "AmplifyAppId": "d3cf33tz6rtljg"
+    },
+    "categories": {
+      "auth": {
+        "giftform9d014f54": {}
+      },
+      "function": {
+        "todoFunction": {}
+      }
+    }
   }
 }

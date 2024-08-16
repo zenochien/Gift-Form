@@ -22,7 +22,7 @@ export default function ContentLayoutComponent() {
         value: "1",
     });
     const [name, setName] = React.useState("");
-    const [surname, setSurname] = React.useState("");
+    const [phone, setPhone] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [notes, setNotes] = React.useState("");
     const [errors, setErrors] = React.useState({});
@@ -37,8 +37,8 @@ export default function ContentLayoutComponent() {
         if (!name) {
             newErrors.name = "Bắt buộc Họ và tên";
         }
-        if (!surname) {
-            newErrors.surname = "Bắt buộc số điện thoại";
+        if (!phone) {
+            newErrors.phone = "Bắt buộc số điện thoại";
         }
         if (!email) {
             newErrors.email = "Bắt buộc email";
@@ -56,10 +56,10 @@ export default function ContentLayoutComponent() {
             } else {
                 try {
                     // Call Amplify API to submit data
-                    const response = await API.post("GiftFCJ", "/items", {
+                    const response = await API.post("todoApi", "/todo", {
                         body: {
                             name,
-                            surname,
+                            phone,
                             email,
                             selectedOption: selectedOption.label,
                             notes,
@@ -69,7 +69,7 @@ export default function ContentLayoutComponent() {
                     // Handle success
                     setRegisteredEmails((prev) => [...prev, email]);
                     setName("");
-                    setSurname("");
+                    setPhone("");
                     setEmail("");
                     setNotes("");
                     setAlert({
@@ -194,10 +194,10 @@ export default function ContentLayoutComponent() {
                                             ariaRequired
                                         />
                                     </FormField>
-                                    <FormField label="Số điện thoại" errorText={errors.surname}>
+                                    <FormField label="Số điện thoại" errorText={errors.phone}>
                                         <Input
-                                            value={surname}
-                                            onChange={({ detail }) => setSurname(detail.value)}
+                                            value={phone}
+                                            onChange={({ detail }) => setPhone(detail.value)}
                                             required
                                             ariaRequired
                                         />

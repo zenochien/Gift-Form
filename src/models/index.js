@@ -16,8 +16,8 @@ export const schema = {
                     isRequired: true,
                 },
                 surname: {
-                    name: 'surname',
-                    type: 'String',
+                    name: 'phone',
+                    type: 'AWSPhone',
                     isRequired: true,
                 },
                 email: {

@@ -1,128 +1,15 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-giftform-dev-b0c0b-authRole",
-      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-b0c0b-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-b0c0b-authRole",
+      "AuthRoleName": "amplify-giftform-gift-6e471-authRole",
+      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-gift-6e471-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-gift-6e471-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
-      "UnauthRoleName": "amplify-giftform-dev-b0c0b-unauthRole",
-      "StackName": "amplify-giftform-dev-b0c0b",
-      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-dev-b0c0b/6bbddfd0-5ba2-11ef-b190-0e9bfe740809",
+      "DeploymentBucketName": "amplify-giftform-gift-6e471-deployment",
+      "UnauthRoleName": "amplify-giftform-gift-6e471-unauthRole",
+      "StackName": "amplify-giftform-gift-6e471",
+      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-gift-6e471/11ab38d0-5bca-11ef-ad6c-12faf8a53b93",
       "AmplifyAppId": "d3cf33tz6rtljg"
-    }
-  },
-  "api": {
-    "todoApi": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "todoFunction"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway",
-      "output": {
-        "ApiName": "todoApi",
-        "RootUrl": "https://ayz4garbna.execute-api.us-east-1.amazonaws.com/dev",
-        "ApiId": "ayz4garbna"
-      },
-      "lastPushTimeStamp": "2024-08-16T08:44:14.866Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/api/todoApi-cloudformation-template.json",
-        "logicalId": "apitodoApi"
-      },
-      "lastPushDirHash": "zQwmGjEhXAVTs4qJPKAgtlqEu+o="
-    }
-  },
-  "function": {
-    "todoFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::992382405090:role/giftformLambdaRole341ace59-dev",
-        "Region": "us-east-1",
-        "Arn": "arn:aws:lambda:us-east-1:992382405090:function:todoFunction-dev",
-        "Name": "todoFunction-dev",
-        "LambdaExecutionRole": "giftformLambdaRole341ace59-dev"
-      },
-      "lastPushTimeStamp": "2024-08-16T08:44:14.869Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/function/todoFunction-cloudformation-template.json",
-        "logicalId": "functiontodoFunction"
-      },
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
-        "s3Key": "amplify-builds/todoFunction-3370356f343679375159-build.zip"
-      },
-      "lastBuildTimeStamp": "2024-08-16T07:50:57.540Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2024-08-16T07:50:58.064Z",
-      "distZipFilename": "todoFunction-3370356f343679375159-build.zip",
-      "lastPushDirHash": "UkZMMwM9pbr7tm4tZJBNcat9Y/o="
-    }
-  },
-  "auth": {
-    "giftform9d014f54": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/auth/giftform9d014f54-cloudformation-template.json",
-        "logicalId": "authgiftform9d014f54"
-      },
-      "lastPushTimeStamp": "2024-08-16T08:44:16.810Z",
-      "output": {
-        "UserPoolId": "us-east-1_NOf8J7Gjy",
-        "AppClientIDWeb": "1rcu56ta2rdsgn16iopbtfnjm5",
-        "AppClientID": "49rp7ulj4m08ddrek04abu603b",
-        "IdentityPoolId": "us-east-1:15b76076-a197-4967-a487-2f4f0b463953",
-        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:992382405090:userpool/us-east-1_NOf8J7Gjy",
-        "IdentityPoolName": "giftform9d014f54_identitypool_9d014f54__dev",
-        "UserPoolName": "giftform9d014f54_userpool_9d014f54"
-      },
-      "lastPushDirHash": "rB9R2tyqyfuzlNmsjS4JqiGrE/o="
-    }
-  },
-  "storage": {
-    "S3friendlyName": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "lastPushTimeStamp": "2024-08-16T08:44:16.810Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "logicalId": "storageS3friendlyName"
-      },
-      "output": {
-        "BucketName": "storagebucketnameb0c0b-dev",
-        "Region": "us-east-1"
-      },
-      "lastPushDirHash": "BzK7mizvJyzmzq3p7fKAbtcNhJA="
     }
   }
 }

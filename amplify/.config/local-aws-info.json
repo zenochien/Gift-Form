@@ -3,5 +3,8 @@
     "configLevel": "project",
     "useProfile": false,
     "awsConfigFilePath": "/Users/trangthuy/.amplify/awscloudformation/Htoegl2RbZ"
+  },
+  "gift": {
+    "configLevel": "amplifyAdmin"
   }
 }

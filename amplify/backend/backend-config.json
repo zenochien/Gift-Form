@@ -48,24 +48,6 @@
       "service": "Lambda"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_todoFunction_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "todoFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_todoFunction_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "todoFunction"
-        }
-      ]
-    }
-  },
   "storage": {
     "S3friendlyName": {
       "dependsOn": [],
