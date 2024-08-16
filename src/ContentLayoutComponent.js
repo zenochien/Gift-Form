@@ -11,7 +11,7 @@ import Input from "@cloudscape-design/components/input";
 import Textarea from "@cloudscape-design/components/textarea";
 import Select from "@cloudscape-design/components/select";
 import Alert from "@cloudscape-design/components/alert";
-import { API } from "aws-amplify"; // Import API from Amplify
+// import { API } from "aws-amplify"; // Import API from Amplify
 import "./App.css";
 import { Box } from "@cloudscape-design/components";
 

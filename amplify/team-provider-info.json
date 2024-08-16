@@ -20,6 +20,14 @@
       },
       "api": {
         "todoApi": {}
+      },
+      "auth": {
+        "giftformc51c55cb": {},
+        "giftform": {},
+        "giftform9d014f54": {}
+      },
+      "storage": {
+        "S3friendlyName": {}
       }
     }
   }
