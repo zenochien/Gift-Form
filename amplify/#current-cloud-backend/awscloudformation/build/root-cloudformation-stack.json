@@ -199,31 +199,31 @@
         }
       }
     },
-    "functionGiftFCJ": {
+    "functiontodoFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-7e143-deployment/amplify-cfn-templates/function/GiftFCJ-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/function/todoFunction-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-giftform-dev-7e143-deployment",
-          "s3Key": "amplify-builds/GiftFCJ-3158527a575163615234-build.zip",
+          "deploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
+          "s3Key": "amplify-builds/todoFunction-3370356f343679375159-build.zip",
           "env": "dev"
         }
       }
     },
-    "apiitems": {
+    "apitodoApi": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-7e143-deployment/amplify-cfn-templates/api/items-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/api/todoApi-cloudformation-template.json",
         "Parameters": {
-          "functionGiftFCJName": {
+          "functiontodoFunctionName": {
             "Fn::GetAtt": [
-              "functionGiftFCJ",
+              "functiontodoFunction",
               "Outputs.Name"
             ]
           },
-          "functionGiftFCJArn": {
+          "functiontodoFunctionArn": {
             "Fn::GetAtt": [
-              "functionGiftFCJ",
+              "functiontodoFunction",
               "Outputs.Arn"
             ]
           },

@@ -1,6 +1,6 @@
 {
   "api": {
-    "items": {
+    "todoApi": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "GiftFCJ"
+          "resourceName": "todoFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -16,26 +16,26 @@
     }
   },
   "function": {
-    "GiftFCJ": {
+    "todoFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_GiftFCJ_deploymentBucketName": {
+    "AMPLIFY_function_todoFunction_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "GiftFCJ"
+          "resourceName": "todoFunction"
         }
       ]
     },
-    "AMPLIFY_function_GiftFCJ_s3Key": {
+    "AMPLIFY_function_todoFunction_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "GiftFCJ"
+          "resourceName": "todoFunction"
         }
       ]
     }

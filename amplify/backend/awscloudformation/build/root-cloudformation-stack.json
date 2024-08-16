@@ -198,6 +198,38 @@
           "Ref": "UnauthRoleName"
         }
       }
+    },
+    "functiontodoFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/function/todoFunction-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
+          "s3Key": "amplify-builds/todoFunction-3370356f343679375159-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "apitodoApi": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-b0c0b-deployment/amplify-cfn-templates/api/todoApi-cloudformation-template.json",
+        "Parameters": {
+          "functiontodoFunctionName": {
+            "Fn::GetAtt": [
+              "functiontodoFunction",
+              "Outputs.Name"
+            ]
+          },
+          "functiontodoFunctionArn": {
+            "Fn::GetAtt": [
+              "functiontodoFunction",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "dev"
+        }
+      }
     }
   }
 }

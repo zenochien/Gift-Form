@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "GiftFCJ",
+            "todoFunction",
             {
               "Fn::Join": [
                 "",
                 [
-                  "GiftFCJ",
+                  "todoFunction",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "giftformLambdaRole50552d68",
+            "giftformLambdaRole341ace59",
             {
               "Fn::Join": [
                 "",
                 [
-                  "giftformLambdaRole50552d68",
+                  "giftformLambdaRole341ace59",
                   "-",
                   {
                     "Ref": "env"

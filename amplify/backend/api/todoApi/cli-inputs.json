@@ -1,9 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/items": {
-      "name": "/items",
-      "lambdaFunction": "GiftFCJ",
+    "/todo": {
+      "name": "/todo",
+      "lambdaFunction": "todoFunction",
       "permissions": {
         "setting": "open"
       }

@@ -10,7 +10,8 @@ import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
 import Textarea from "@cloudscape-design/components/textarea";
 import Select from "@cloudscape-design/components/select";
-import Alert from "@cloudscape-design/components/alert"; // Add Alert component for notifications
+import Alert from "@cloudscape-design/components/alert";
+import { API } from "aws-amplify"; // Import API from Amplify
 import "./App.css";
 import { Box } from "@cloudscape-design/components";
 
@@ -25,13 +26,11 @@ export default function ContentLayoutComponent() {
     const [email, setEmail] = React.useState("");
     const [notes, setNotes] = React.useState("");
     const [errors, setErrors] = React.useState({});
-    const [alert, setAlert] = React.useState(null); // State for success/error alert
-    const [registeredEmails, setRegisteredEmails] = React.useState([]); // State to store registered emails
-
-    // Create a ref for the form container
+    const [alert, setAlert] = React.useState(null);
+    const [registeredEmails, setRegisteredEmails] = React.useState([]);
     const formRef = useRef(null);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const newErrors = {};
 
@@ -55,16 +54,37 @@ export default function ContentLayoutComponent() {
                     content: "Email này đã được đăng ký.",
                 });
             } else {
-                setRegisteredEmails((prev) => [...prev, email]);
-                setName("");
-                setSurname("");
-                setEmail("");
-                setNotes("");
-                setAlert({
-                    type: "success",
-                    header: "Đăng ký thành công",
-                    content: "Đăng ký của bạn đã thành công!",
-                });
+                try {
+                    // Call Amplify API to submit data
+                    const response = await API.post("GiftFCJ", "/items", {
+                        body: {
+                            name,
+                            surname,
+                            email,
+                            selectedOption: selectedOption.label,
+                            notes,
+                        },
+                    });
+
+                    // Handle success
+                    setRegisteredEmails((prev) => [...prev, email]);
+                    setName("");
+                    setSurname("");
+                    setEmail("");
+                    setNotes("");
+                    setAlert({
+                        type: "success",
+                        header: "Đăng ký thành công",
+                        content: "Đăng ký của bạn đã thành công!",
+                    });
+                } catch (error) {
+                    // Handle error
+                    setAlert({
+                        type: "error",
+                        header: "Đăng ký không thành công",
+                        content: `Có lỗi xảy ra: ${error.message}`,
+                    });
+                }
             }
 
             setErrors({});

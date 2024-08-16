@@ -1,15 +1,26 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-giftform-dev-8b7ea-authRole",
-      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-8b7ea-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-8b7ea-authRole",
+      "AuthRoleName": "amplify-giftform-dev-b0c0b-authRole",
+      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-b0c0b-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-b0c0b-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-giftform-dev-8b7ea-deployment",
-      "UnauthRoleName": "amplify-giftform-dev-8b7ea-unauthRole",
-      "StackName": "amplify-giftform-dev-8b7ea",
-      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-dev-8b7ea/75392c10-59f7-11ef-a9ce-0affcdd81315",
-      "AmplifyAppId": "d2k4ehevzrbdem"
+      "DeploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
+      "UnauthRoleName": "amplify-giftform-dev-b0c0b-unauthRole",
+      "StackName": "amplify-giftform-dev-b0c0b",
+      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-dev-b0c0b/6bbddfd0-5ba2-11ef-b190-0e9bfe740809",
+      "AmplifyAppId": "d3cf33tz6rtljg"
+    },
+    "categories": {
+      "function": {
+        "todoFunction": {
+          "deploymentBucketName": "amplify-giftform-dev-b0c0b-deployment",
+          "s3Key": "amplify-builds/todoFunction-3370356f343679375159-build.zip"
+        }
+      },
+      "api": {
+        "todoApi": {}
+      }
     }
   }
 }
