@@ -1,0 +1,43 @@
+{
+  "api": {
+    "items": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "GiftFCJ"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "GiftFCJ": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_GiftFCJ_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GiftFCJ"
+        }
+      ]
+    },
+    "AMPLIFY_function_GiftFCJ_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GiftFCJ"
+        }
+      ]
+    }
+  }
+}
