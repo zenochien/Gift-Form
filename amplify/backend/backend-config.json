@@ -1,0 +1,49 @@
+{
+  "api": {
+    "apiform": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "formlamdba"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "formlamdba": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_formlamdba_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "formlamdba"
+        }
+      ]
+    },
+    "AMPLIFY_function_formlamdba_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "formlamdba"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "formtable": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    }
+  }
+}

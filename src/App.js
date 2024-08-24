@@ -3,6 +3,10 @@ import './App.css';
 import "@cloudscape-design/global-styles/index.css";
 import ContentLayoutComponent from "./ContentLayoutComponent";
 
+import { Amplify } from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 function App() {
   return (
