@@ -10,9 +10,10 @@ import FormField from "@cloudscape-design/components/form-field";
 import Input from "@cloudscape-design/components/input";
 import Textarea from "@cloudscape-design/components/textarea";
 import Select from "@cloudscape-design/components/select";
-import Alert from "@cloudscape-design/components/alert"; // Add Alert component for notifications
-import "./App.css";
+import Alert from "@cloudscape-design/components/alert";
 import { Box } from "@cloudscape-design/components";
+
+import { get, post } from 'aws-amplify/api';
 
 export default function ContentLayoutComponent() {
     const [value, setValue] = React.useState("gift-items");
@@ -21,25 +22,27 @@ export default function ContentLayoutComponent() {
         value: "1",
     });
     const [name, setName] = React.useState("");
-    const [surname, setSurname] = React.useState("");
+    const [phone, setphone] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [notes, setNotes] = React.useState("");
     const [errors, setErrors] = React.useState({});
-    const [alert, setAlert] = React.useState(null); // State for success/error alert
-    const [registeredEmails, setRegisteredEmails] = React.useState([]); // State to store registered emails
+    const [alert, setAlert] = React.useState(null);
+    const [registeredEmails, setRegisteredEmails] = React.useState([]);
+    const [selectedItemName, setSelectedItemName] = React.useState("Áo FCJ");
+    const [selectedImage, setSelectedImage] = React.useState("/images/1.png");
 
     // Create a ref for the form container
     const formRef = useRef(null);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const newErrors = {};
 
         if (!name) {
             newErrors.name = "Bắt buộc Họ và tên";
         }
-        if (!surname) {
-            newErrors.surname = "Bắt buộc số điện thoại";
+        if (!phone) {
+            newErrors.phone = "Bắt buộc số điện thoại";
         }
         if (!email) {
             newErrors.email = "Bắt buộc email";
@@ -47,7 +50,50 @@ export default function ContentLayoutComponent() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-        } else {
+        }
+
+        else {
+            // Perform the POST request
+            try {
+                const dataPost = post({
+                    apiName: 'apiform',
+                    path: '/items',
+                    options: {
+                        method: 'POST',
+                        body: {
+                            name: name,
+                            phone: phone,
+                            email: email,
+                            notes: notes,
+                            size: selectedOption.label,
+                            selectedItemName: selectedItemName,
+                            selectedImage: selectedImage
+                        }
+                    }
+                });
+
+                const responsePost = await dataPost.response;
+
+                console.log('POST call succeeded');
+                console.log(responsePost);
+            } catch (e) {
+                console.log('POST call failed: ', e);
+            }
+
+            try {
+                const existingEmail = get({
+                    apiName: 'apiform',
+                    path: '/items',
+                    queryParams: {
+                        email: email
+                    }
+                });
+                const responseGET = await existingEmail.response;
+                console.log('GET call succeeded: ', responseGET);
+            } catch (e) {
+                console.log('GET call failed: ', e);
+            }
+
             if (registeredEmails.includes(email)) {
                 setAlert({
                     type: "error",
@@ -55,15 +101,16 @@ export default function ContentLayoutComponent() {
                     content: "Email này đã được đăng ký.",
                 });
             } else {
+                // Register the email and reset the form
                 setRegisteredEmails((prev) => [...prev, email]);
                 setName("");
-                setSurname("");
+                setphone("");
                 setEmail("");
                 setNotes("");
                 setAlert({
                     type: "success",
                     header: "Đăng ký thành công",
-                    content: "Đăng ký của bạn đã thành công!",
+                    content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
                 });
             }
 
@@ -73,6 +120,18 @@ export default function ContentLayoutComponent() {
 
     const handleTileChange = ({ detail }) => {
         setValue(detail.value);
+
+        // Update selected image and item name based on selected tile
+        if (detail.value === "gift-items") {
+            setSelectedItemName("Áo FCJ");
+            setSelectedImage("/images/1.png");
+        } else if (detail.value === "item2") {
+            setSelectedItemName("Bình nước FCJ");
+            setSelectedImage("/images/2.png");
+        } else if (detail.value === "item3") {
+            setSelectedItemName("Nón FCJ");
+            setSelectedImage("/images/3.png");
+        }
 
         // Scroll to the form when a tile is selected
         if (formRef.current) {
@@ -106,7 +165,7 @@ export default function ContentLayoutComponent() {
                                 image: (
                                     <img
                                         src="/images/1.png"
-                                        alt="bootle"
+                                        alt="Áo FCJ"
                                         className="tiles-item"
                                     />
                                 ),
@@ -117,7 +176,7 @@ export default function ContentLayoutComponent() {
                                 image: (
                                     <img
                                         src="/images/2.png"
-                                        alt="box"
+                                        alt="Bình nước FCJ"
                                         className="tiles-item"
                                     />
                                 ),
@@ -128,7 +187,7 @@ export default function ContentLayoutComponent() {
                                 image: (
                                     <img
                                         src="/images/3.png"
-                                        alt="shirt"
+                                        alt="Nón FCJ"
                                         className="tiles-item"
                                     />
                                 ),
@@ -174,10 +233,10 @@ export default function ContentLayoutComponent() {
                                             ariaRequired
                                         />
                                     </FormField>
-                                    <FormField label="Số điện thoại" errorText={errors.surname}>
+                                    <FormField label="Số điện thoại" errorText={errors.phone}>
                                         <Input
-                                            value={surname}
-                                            onChange={({ detail }) => setSurname(detail.value)}
+                                            value={phone}
+                                            onChange={({ detail }) => setphone(detail.value)}
                                             required
                                             ariaRequired
                                         />
@@ -214,6 +273,18 @@ export default function ContentLayoutComponent() {
                                             value={notes}
                                             onChange={({ detail }) => setNotes(detail.value)}
                                             placeholder="Ghi chú"
+                                        />
+                                    </FormField>
+
+                                    {/* Display selected image and item name */}
+                                    <FormField label="Quà tặng đã chọn">
+                                        <Box variant="h3">
+                                            {selectedItemName}
+                                        </Box>
+                                        <img
+                                            src={selectedImage}
+                                            alt={selectedItemName}
+                                            style={{ maxWidth: "100px" }}
                                         />
                                     </FormField>
                                 </SpaceBetween>
