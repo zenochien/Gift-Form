@@ -1,6 +1,6 @@
 {
   "api": {
-    "apiform": {
+    "api1c7f3d57": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "formlamdba"
+          "resourceName": "formgift037b1558"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -16,26 +16,26 @@
     }
   },
   "function": {
-    "formlamdba": {
+    "formgift037b1558": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_formlamdba_deploymentBucketName": {
+    "AMPLIFY_function_formgift037b1558_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "formlamdba"
+          "resourceName": "formgift037b1558"
         }
       ]
     },
-    "AMPLIFY_function_formlamdba_s3Key": {
+    "AMPLIFY_function_formgift037b1558_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "formlamdba"
+          "resourceName": "formgift037b1558"
         }
       ]
     }

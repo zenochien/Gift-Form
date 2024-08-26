@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "formlamdba",
+            "formgift037b1558",
             {
               "Fn::Join": [
                 "",
                 [
-                  "formlamdba",
+                  "formgift037b1558",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "giftformLambdaRoled4a0de33",
+            "formgiftLambdaRole46f9c0e1",
             {
               "Fn::Join": [
                 "",
                 [
-                  "giftformLambdaRoled4a0de33",
+                  "formgiftLambdaRole46f9c0e1",
                   "-",
                   {
                     "Ref": "env"

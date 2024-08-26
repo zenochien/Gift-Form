@@ -1,0 +1,10 @@
+{
+  "resourceName": "formtable",
+  "tableName": "formtable",
+  "partitionKey": {
+    "fieldName": "email",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

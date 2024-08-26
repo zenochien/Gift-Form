@@ -3,7 +3,7 @@
   "paths": {
     "/items": {
       "name": "/items",
-      "lambdaFunction": "formlamdba",
+      "lambdaFunction": "formgift037b1558",
       "permissions": {
         "setting": "open"
       }

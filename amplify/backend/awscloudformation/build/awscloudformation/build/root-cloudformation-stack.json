@@ -199,46 +199,46 @@
         }
       }
     },
+    "functionformgift037b1558": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/function/formgift037b1558-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-formgift-dev-e186f-deployment",
+          "s3Key": "amplify-builds/formgift037b1558-774a62645257592f2b2f-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "apiapi1c7f3d57": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/api/api1c7f3d57-cloudformation-template.json",
+        "Parameters": {
+          "functionformgift037b1558Name": {
+            "Fn::GetAtt": [
+              "functionformgift037b1558",
+              "Outputs.Name"
+            ]
+          },
+          "functionformgift037b1558Arn": {
+            "Fn::GetAtt": [
+              "functionformgift037b1558",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
     "storageformtable": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/storage/formtable-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/storage/formtable-cloudformation-template.json",
         "Parameters": {
           "tableName": "formtable",
           "partitionKeyName": "email",
           "partitionKeyType": "S",
-          "env": "dev"
-        }
-      }
-    },
-    "functionformlamdba": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/function/formlamdba-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-giftform-dev-ba590-deployment",
-          "s3Key": "amplify-builds/formlamdba-58322f72326b70663838-build.zip",
-          "env": "dev"
-        }
-      }
-    },
-    "apiapiform": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/api/apiform-cloudformation-template.json",
-        "Parameters": {
-          "functionformlamdbaName": {
-            "Fn::GetAtt": [
-              "functionformlamdba",
-              "Outputs.Name"
-            ]
-          },
-          "functionformlamdbaArn": {
-            "Fn::GetAtt": [
-              "functionformlamdba",
-              "Outputs.Arn"
-            ]
-          },
           "env": "dev"
         }
       }

@@ -56,7 +56,7 @@ export default function ContentLayoutComponent() {
             // Perform the POST request
             try {
                 const dataPost = post({
-                    apiName: 'apiform',
+                    apiName: 'api1c7f3d57',
                     path: '/items',
                     options: {
                         method: 'POST',
@@ -82,7 +82,7 @@ export default function ContentLayoutComponent() {
 
             try {
                 const existingEmail = get({
-                    apiName: 'apiform',
+                    apiName: 'api1c7f3d57',
                     path: '/items',
                     queryParams: {
                         email: email
