@@ -1,0 +1,90 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-giftform-dev-ba590-authRole",
+      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-ba590-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-giftform-dev-ba590-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-giftform-dev-ba590-deployment",
+      "UnauthRoleName": "amplify-giftform-dev-ba590-unauthRole",
+      "StackName": "amplify-giftform-dev-ba590",
+      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-dev-ba590/b05ae550-61d5-11ef-9f5b-0affde96e0ab",
+      "AmplifyAppId": "d345h3f22hrnzj"
+    }
+  },
+  "storage": {
+    "formtable": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/storage/formtable-cloudformation-template.json",
+        "logicalId": "storageformtable"
+      },
+      "lastPushTimeStamp": "2024-08-26T04:09:09.529Z",
+      "output": {
+        "PartitionKeyName": "email",
+        "Region": "us-east-1",
+        "Arn": "arn:aws:dynamodb:us-east-1:992382405090:table/formtable-dev",
+        "StreamArn": "arn:aws:dynamodb:us-east-1:992382405090:table/formtable-dev/stream/2024-08-24T05:06:56.987",
+        "PartitionKeyType": "S",
+        "Name": "formtable-dev"
+      },
+      "lastPushDirHash": "tpaAJxg1gdI0D79SjjjIG/KBUP4="
+    }
+  },
+  "function": {
+    "formlamdba": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2024-08-26T04:07:48.895Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2024-08-26T04:07:49.758Z",
+      "distZipFilename": "formlamdba-58322f72326b70663838-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-giftform-dev-ba590-deployment",
+        "s3Key": "amplify-builds/formlamdba-58322f72326b70663838-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/function/formlamdba-cloudformation-template.json",
+        "logicalId": "functionformlamdba"
+      },
+      "lastPushTimeStamp": "2024-08-26T04:09:10.703Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::992382405090:role/giftformLambdaRoled4a0de33-dev",
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:992382405090:function:formlamdba-dev",
+        "Name": "formlamdba-dev",
+        "LambdaExecutionRole": "giftformLambdaRoled4a0de33-dev"
+      },
+      "lastPushDirHash": "J51vVG+z0LPmfPHQCu44GFeQZ0c="
+    }
+  },
+  "api": {
+    "apiform": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "formlamdba",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-giftform-dev-ba590-deployment/amplify-cfn-templates/api/apiform-cloudformation-template.json",
+        "logicalId": "apiapiform"
+      },
+      "lastPushTimeStamp": "2024-08-26T04:09:09.534Z",
+      "output": {
+        "ApiName": "apiform",
+        "RootUrl": "https://kmxgk9k0d4.execute-api.us-east-1.amazonaws.com/dev",
+        "ApiId": "kmxgk9k0d4"
+      },
+      "lastPushDirHash": "zrPFcEVdqRwl7d4NMJ1OaXArFHo="
+    }
+  }
+}
