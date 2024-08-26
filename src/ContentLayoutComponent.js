@@ -15,6 +15,7 @@ import { Box } from "@cloudscape-design/components";
 
 import { post, get } from 'aws-amplify/api';
 
+
 export default function ContentLayoutComponent() {
     const [value, setValue] = React.useState("gift-items");
     const [selectedOption, setSelectedOption] = React.useState({
@@ -50,10 +51,7 @@ export default function ContentLayoutComponent() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-        }
-
-        else {
-
+        } else {
             try {
                 const dataPost = post({
                     apiName: 'apiform',
@@ -74,8 +72,8 @@ export default function ContentLayoutComponent() {
                 const { body } = await dataPost.response;
                 const response = await body.json();
 
-                console.log('POST call succeeded');
-                console.log(response);
+                // console.log('POST call succeeded');
+                // console.log(response);
             } catch (e) {
                 console.log('POST call failed: ', JSON.parse(e.response.body));
             }
@@ -88,11 +86,33 @@ export default function ContentLayoutComponent() {
                         email: email
                     }
                 });
+
                 const responseGET = await existingEmail.response;
                 console.log('GET call succeeded: ', responseGET);
+
+                if (registeredEmails.includes(email)) {
+                    setAlert({
+                        type: "error",
+                        header: "Đăng ký không thành công",
+                        content: "Email này đã được đăng ký.",
+                    });
+                } else {
+                    // Register the email and reset the form
+                    setRegisteredEmails((prev) => [...prev, email]);
+                    setName("");
+                    setphone("");
+                    setEmail("");
+                    setNotes("");
+                    setAlert({
+                        type: "success",
+                        header: "Đăng ký thành công",
+                        content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
+                    });
+                }
             } catch (e) {
                 console.log('GET call failed: ', e);
             }
+
 
             if (registeredEmails.includes(email)) {
                 setAlert({

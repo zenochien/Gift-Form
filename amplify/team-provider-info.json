@@ -15,7 +15,7 @@
       "function": {
         "formlamdba": {
           "deploymentBucketName": "amplify-giftform-dev-ba590-deployment",
-          "s3Key": "amplify-builds/formlamdba-784b7874753356736658-build.zip"
+          "s3Key": "amplify-builds/formlamdba-58322f72326b70663838-build.zip"
         }
       },
       "storage": {

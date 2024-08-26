@@ -76,11 +76,31 @@ app.get(path, async function (req, res) {
 
   try {
     const data = await ddbDocClient.send(new ScanCommand(params));
-    res.json(data.Items);
+    res.json(data.Item);
   } catch (err) {
     res.statusCode = 500;
     res.json({ error: 'Could not load items: ' + err.message });
   }
+});
+
+// Use GetCommand that query email alrealy exists
+app.get(path, async function (req, res) {
+  var params = new GetCommand({
+    TableName: tableName,
+    Key: { email: partitionKeyName }, //partitionKeyName = "email"
+  });
+
+  // try {
+  //   const data = await ddbDocClient.send(new GetCommand(params));
+  //   res.json(data.Items); // Items hay items, còn nữa là path= "/items"?
+  // } catch (err) {
+  //   res.statusCode = 500;
+  //   res.json({ error: 'Could not load items: ' + err.message });
+  // }
+
+  const response = await ddbDocClient.send(params);
+  console.log(response);
+  return response;
 });
 
 /************************************
