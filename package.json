@@ -5,16 +5,18 @@
   "dependencies": {
     "@aws-amplify/datastore": "^5.0.44",
     "@aws-amplify/ui-react": "^6.2.0",
+    "@aws-sdk/client-dynamodb": "^3.637.0",
     "@cloudscape-design/components": "^3.0.712",
     "@cloudscape-design/global-styles": "^1.0.32",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "aws-amplify": "^6.5.0",
+    "aws-sdk": "^2.1683.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native-web": "^0.19.12",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

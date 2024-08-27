@@ -29,7 +29,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/function/formgift037b1558-cloudformation-template.json",
         "logicalId": "functionformgift037b1558"
       },
-      "lastPushTimeStamp": "2024-08-26T06:11:31.192Z",
+      "lastPushTimeStamp": "2024-08-26T07:14:19.476Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::992382405090:role/formgiftLambdaRole46f9c0e1-dev",
         "Region": "us-east-1",
@@ -58,7 +58,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/api/api1c7f3d57-cloudformation-template.json",
         "logicalId": "apiapi1c7f3d57"
       },
-      "lastPushTimeStamp": "2024-08-26T06:11:31.192Z",
+      "lastPushTimeStamp": "2024-08-26T07:14:19.482Z",
       "output": {
         "ApiName": "api1c7f3d57",
         "RootUrl": "https://tlbj3t7t6g.execute-api.us-east-1.amazonaws.com/dev",
@@ -75,7 +75,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-formgift-dev-e186f-deployment/amplify-cfn-templates/storage/formtable-cloudformation-template.json",
         "logicalId": "storageformtable"
       },
-      "lastPushTimeStamp": "2024-08-26T06:11:31.192Z",
+      "lastPushTimeStamp": "2024-08-26T07:14:19.483Z",
       "output": {
         "PartitionKeyName": "email",
         "Region": "us-east-1",

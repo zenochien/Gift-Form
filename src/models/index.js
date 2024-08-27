@@ -15,8 +15,8 @@ export const schema = {
                     type: 'String',
                     isRequired: true,
                 },
-                surname: {
-                    name: 'surname',
+                phone: {
+                    name: 'phone',
                     type: 'String',
                     isRequired: true,
                 },

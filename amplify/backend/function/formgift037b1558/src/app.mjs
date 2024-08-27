@@ -26,6 +26,9 @@ import awsServerlessExpressMiddleware from "aws-serverless-express/middleware.js
 const ddbClient = new DynamoDBClient({ region: process.env.TABLE_REGION });
 const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
 
+// const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
+app.use(awsServerlessExpressMiddleware.eventContext());
+
 let tableName = "formtable";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
@@ -63,6 +66,21 @@ const convertUrlType = (param, type) => {
       return param;
   }
 }
+
+/************************************
+* REST API Get method to singer objects *
+************************************/
+
+app.get('/items', function (req, res) {
+  const query = req.query;
+  // or
+  // const query = req.apiGateway.event.queryStringParameters
+  res.json({
+    event: req.apiGateway.event, // to view all event data
+    query: query
+  });
+});
+
 
 /************************************
 * HTTP Get method to list objects *
