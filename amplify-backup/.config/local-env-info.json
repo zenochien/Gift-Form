@@ -1,5 +1,6 @@
 {
   "projectPath": "/Users/trangthuy/Desktop/Gift Form",
+  "envName": "dev",
   "defaultEditor": "vscode",
-  "envName": "dev"
+  "noUpdateBackend": true
 }

@@ -3,5 +3,10 @@
     "configLevel": "project",
     "useProfile": false,
     "awsConfigFilePath": "/Users/trangthuy/.amplify/awscloudformation/K5NdfMXmav"
+  },
+  "main": {
+    "configLevel": "project",
+    "useProfile": false,
+    "awsConfigFilePath": "/Users/trangthuy/.amplify/awscloudformation/PIvoDg5Bwe"
   }
 }

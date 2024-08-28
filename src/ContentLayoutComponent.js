@@ -14,6 +14,7 @@ import Alert from "@cloudscape-design/components/alert";
 import { Box } from "@cloudscape-design/components";
 
 import { get, post } from 'aws-amplify/api';
+import * as e from 'express';
 
 export default function ContentLayoutComponent() {
     const [value, setValue] = React.useState("gift-items");
@@ -34,8 +35,99 @@ export default function ContentLayoutComponent() {
     // Create a ref for the form container
     const formRef = useRef(null);
 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     const newErrors = {};
+
+    //     if (!name) {
+    //         newErrors.name = "Bắt buộc Họ và tên";
+    //     }
+    //     if (!phone) {
+    //         newErrors.phone = "Bắt buộc số điện thoại";
+    //     }
+    //     if (!email) {
+    //         newErrors.email = "Bắt buộc email";
+    //     }
+
+    //     if (Object.keys(newErrors).length > 0) {
+    //         setErrors(newErrors);
+    //     }
+
+    //     else {
+    //         // Perform the POST request
+    //         try {
+    //             const dataPost = post({
+    //                 apiName: 'api1c7f3d57',
+    //                 path: '/items',
+    //                 options: {
+    //                     method: 'POST',
+    //                     body: {
+    //                         name: name,
+    //                         phone: phone,
+    //                         email: email,
+    //                         notes: notes,
+    //                         size: selectedOption.label,
+    //                         selectedItemName: selectedItemName,
+    //                         selectedImage: selectedImage
+    //                     }
+    //                 }
+    //             });
+
+    //             const responsePost = await dataPost.response;
+
+    //             console.log('POST call succeeded');
+    //             console.log(responsePost);
+    //         } catch (e) {
+    //             console.log('POST call failed: ', e);
+    //         }
+
+    //         try {
+    //             const existingEmail = get({
+    //                 apiName: 'api1c7f3d57',
+    //                 path: '/items',
+    //                 options: {
+    //                     queryParams: {
+    //                         email: email
+    //                     }
+    //                 }
+    //             });
+
+    //             // setRegisteredEmails(existingEmail);
+
+    //             const responseGET = await existingEmail.response;
+
+    //             console.log('GET call succeeded: ', responseGET);
+
+
+    //         } catch (e) {
+    //             console.log('GET call failed: ', e);
+    //         }
+
+    //         if (registeredEmails.includes(email)) {
+    //             setAlert({
+    //                 type: "error",
+    //                 header: "Đăng ký không thành công",
+    //                 content: "Email này đã được đăng ký.",
+    //             });
+    //         } else {
+    //             // Register the email and reset the form
+    //             setRegisteredEmails((prev) => [...prev, email]);
+    //             setName("");
+    //             setphone("");
+    //             setEmail("");
+    //             setNotes("");
+    //             setAlert({
+    //                 type: "success",
+    //                 header: "Đăng ký thành công",
+    //                 content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
+    //             });
+    //         }
+
+    //         setErrors({});
+    //     }
+    // };
+
     const handleSubmit = async (event) => {
-        event.preventDefault();
         const newErrors = {};
 
         if (!name) {
@@ -52,71 +144,82 @@ export default function ContentLayoutComponent() {
             setErrors(newErrors);
         }
 
-        else {
-            // Perform the POST request
-            try {
-                const dataPost = post({
-                    apiName: 'api1c7f3d57',
-                    path: '/items',
-                    options: {
-                        method: 'POST',
-                        body: {
-                            name: name,
-                            phone: phone,
-                            email: email,
-                            notes: notes,
-                            size: selectedOption.label,
-                            selectedItemName: selectedItemName,
-                            selectedImage: selectedImage
-                        }
-                    }
-                });
+        try {
 
-                const responsePost = await dataPost.response;
-
-                console.log('POST call succeeded');
-                console.log(responsePost);
-            } catch (e) {
-                console.log('POST call failed: ', e);
-            }
-
-            try {
-                const existingEmail = get({
-                    apiName: 'api1c7f3d57',
-                    path: '/items',
-                    queryParams: {
-                        email: email
-                    }
-                });
-                const responseGET = await existingEmail.response;
-                console.log('GET call succeeded: ', responseGET);
-            } catch (e) {
-                console.log('GET call failed: ', e);
-            }
-
-            if (registeredEmails.includes(email)) {
+            // Check for existing email
+            const response = await getEmail(email);
+            if (response) {
                 setAlert({
                     type: "error",
                     header: "Đăng ký không thành công",
                     content: "Email này đã được đăng ký.",
                 });
-            } else {
-                // Register the email and reset the form
-                setRegisteredEmails((prev) => [...prev, email]);
-                setName("");
-                setphone("");
-                setEmail("");
-                setNotes("");
-                setAlert({
-                    type: "success",
-                    header: "Đăng ký thành công",
-                    content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
-                });
             }
 
-            setErrors({});
+            // Post data
+            const postResponse = await postData(name, phone, email, notes, selectedOption, selectedItemName, selectedImage);
+
+            // Update registerd email
+            setRegisteredEmails((prev) => [...prev, email]);
+
+            //Show success message 
+            setAlert({
+                type: "success",
+                header: "Đăng ký thành công",
+                content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
+            });
+
+            // Rest form
+            setName("");
+            setphone("");
+            setEmail("");
+            setNotes("");
+        } catch {
+            console.log("POST call failed")
         }
-    };
+
+    }
+
+    async function getEmail(email) {
+        try {
+            const response = get({
+                apiName: 'api1c7f3d57',
+                path: '/items',
+                options: {
+                    queryParams: {
+                        email: email
+                    }
+                }
+            });
+            return response;
+        } catch (e) {
+            console.log('GET call failed: ', e);
+        }
+    }
+
+    async function postData(name, phone, email, notes, selectedOption, selectedItemName, selectedImage) {
+        try {
+            const response = post({
+                apiName: 'api1c7f3d57',
+                path: '/items',
+                options: {
+                    method: 'POST',
+                    body: {
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        notes: notes,
+                        size: selectedOption.label,
+                        selectedItemName: selectedItemName,
+                        selectedImage: selectedImage
+                    }
+                }
+            });
+            return response;
+        } catch (e) {
+            console.log('POST call failed: ', e);
+        }
+    }
 
     const handleTileChange = ({ detail }) => {
         setValue(detail.value);

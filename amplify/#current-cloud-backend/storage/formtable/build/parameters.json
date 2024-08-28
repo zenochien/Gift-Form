@@ -1,5 +1,0 @@
-{
-  "tableName": "formtable",
-  "partitionKeyName": "email",
-  "partitionKeyType": "S"
-}
