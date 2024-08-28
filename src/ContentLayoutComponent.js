@@ -13,13 +13,13 @@ import Select from "@cloudscape-design/components/select";
 import Alert from "@cloudscape-design/components/alert";
 import { Box } from "@cloudscape-design/components";
 
-import { get, post } from "aws-amplify/api"; //Dấu "" là double quotes
+import { get, post } from "aws-amplify/api";
 
 export default function ContentLayoutComponent() {
     const [value, setValue] = React.useState("gift-items");
     const [selectedOption, setSelectedOption] = React.useState({
-        label: "Áo S",
-        value: "1",
+        label: "",
+        value: "",
     });
     const [name, setName] = React.useState("");
     const [phone, setphone] = React.useState("");
@@ -27,8 +27,8 @@ export default function ContentLayoutComponent() {
     const [notes, setNotes] = React.useState("");
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null);
-    // const [registeredEmails, setRegisteredEmails] = React.useState([]);
-    const [selectedItemName, setSelectedItemName] = React.useState("Áo FCJ");
+    const [registeredEmails, setRegisteredEmails] = React.useState([]);
+    const [selectedItemName, setSelectedItemName] = React.useState("Áo First Cloud Journey");
     const [selectedImage, setSelectedImage] = React.useState("/images/1.png");
 
     // Create a ref for the form container
@@ -53,8 +53,11 @@ export default function ContentLayoutComponent() {
         } else {
             //Check email exist or not
             try {
-
-                // Hàm GET lấy đối tượng từ DB, GET từ API truy vấn email 
+                // Get gửi yêu câu đến /items, với tham số truy vấn queryParams chỉ email cần kiểm tra
+                // existingEmail lưu kết quả từ API
+                // existingEmail.response trích xuất pha62 {body} của phản hồi từ API
+                // json phân tích cú pháp dạng JSON từ phản hồi
+                // console.log(json) In ra nội dung JSON từ API
                 const existingEmail = get({
                     apiName: "api1c7f3d57",
                     path: "/items",
@@ -64,11 +67,10 @@ export default function ContentLayoutComponent() {
                         },
                     },
                 });
-                const { body } = await existingEmail.response; // body trích xuất từ existingEmail.response
-                const json = await body.json(); // dạng JSON, Object khai báo thông tin
+                const { body } = await existingEmail.response;
+                const json = await body.json();
                 console.log(json);
                 // If email existed
-                // Object trả về mảng DB tất cả email, nếu lenght > 0 mà kiểm tra so sanh email
                 if (Object.keys(json).length > 0) {
                     setAlert({
                         type: "error",
@@ -77,7 +79,11 @@ export default function ContentLayoutComponent() {
                     });
                 } else {  // if not
                     // Perform the POST request
-                    // Khai báo thông tin
+
+                    // post gửi yêu cầu đến /items, dữ liệu (payload) chưa thông tin về DB
+                    // dataPost chứa kết quả của việc gọi API POST
+                    // responsePost trích xuất phản hồi từ kết quả API sau khi y/c thực hiệu success
+                    // console.log(responsePost) in ra phản hồi API
                     const dataPost = post({
                         apiName: "api1c7f3d57",
                         path: "/items",
@@ -95,11 +101,10 @@ export default function ContentLayoutComponent() {
                         },
                     });
 
-                    const responsePost = await dataPost.response; //Lấy trích xuất dataPost.response 
-                    console.log("POST call succeeded"); //Kiếm tra Post lên DB 
-                    console.log(responsePost); //Kiểm tra đối tượng
+                    const responsePost = await dataPost.response;
+                    console.log("POST call succeeded");
+                    console.log(responsePost);
 
-                    // Làm mới form sau khi đăng ký thành công
                     setName("");
                     setphone("");
                     setEmail("");
@@ -123,13 +128,13 @@ export default function ContentLayoutComponent() {
 
         // Update selected image and item name based on selected tile
         if (detail.value === "gift-items") {
-            setSelectedItemName("Áo FCJ");
+            setSelectedItemName("Áo First Cloud Journey");
             setSelectedImage("/images/1.png");
         } else if (detail.value === "item2") {
-            setSelectedItemName("Bình nước FCJ");
+            setSelectedItemName("Bình nước First Cloud Journey");
             setSelectedImage("/images/2.png");
         } else if (detail.value === "item3") {
-            setSelectedItemName("Nón FCJ");
+            setSelectedItemName("Nón First Cloud Journey");
             setSelectedImage("/images/3.png");
         }
 
@@ -142,19 +147,33 @@ export default function ContentLayoutComponent() {
     return (
         <>
             <ContentLayout
-                defaultPadding
-                headerBackgroundStyle="linear-gradient(135deg, rgb(71, 17, 118) 3%, rgb(131, 57, 157) 44%, rgb(149, 85, 182) 69%, rgb(145, 134, 215) 94%)"
-                headerVariant="high-contrast"
-                maxContentWidth={800}
+                // defaultPadding
+                // headerVariant="high-contrast"
+                // maxContentWidth={800}
                 header={
-                    <Header
-                        variant="h1"
-                        description="18, September 2024 | JW Marriott Hotel Hanoi"
-                    >
-                        Cloud Day Vietnam Gift
-                    </Header>
+                    <div className="header-container">
+                        <Header
+                            variant="h1"
+                            description={
+                                <div>
+                                    <h1 className="header-title">Cloud Day Vietnam</h1>
+                                    <br></br>
+                                    <span className="sub-title">Gift 2024</span>
+                                </div>
+
+                            }
+                        >
+                            <div >
+                                <div className="header-description">18, September 2024 | <b>JW Marriott Hotel Hanoi</b></div>
+                            </div>
+                        </Header>
+
+                    </div>
                 }
-            ></ContentLayout>
+            >
+                {/* Content goes here */}
+            </ContentLayout>
+
             <Box className="header-content" variant="h1" padding={{ top: "m" }}>
                 Gift from First Cloud Journey
             </Box>
@@ -167,33 +186,33 @@ export default function ContentLayoutComponent() {
                         ariaRequired
                         items={[
                             {
-                                label: "Áo FCJ",
+                                label: "Áo First Cloud Journey",
                                 image: (
                                     <img
                                         src="/images/1.png"
-                                        alt="Áo FCJ"
+                                        alt="Áo First Cloud Journey"
                                         className="tiles-item"
                                     />
                                 ),
                                 value: "gift-items",
                             },
                             {
-                                label: "Bình nước FCJ",
+                                label: "Bình nước First Cloud Journey",
                                 image: (
                                     <img
                                         src="/images/2.png"
-                                        alt="Bình nước FCJ"
+                                        alt="Bình nước First Cloud Journey"
                                         className="tiles-item"
                                     />
                                 ),
                                 value: "item2",
                             },
                             {
-                                label: "Nón FCJ",
+                                label: "Nón First Cloud Journey",
                                 image: (
                                     <img
                                         src="/images/3.png"
-                                        alt="Nón FCJ"
+                                        alt="Nón First Cloud Journey"
                                         className="tiles-item"
                                     />
                                 ),
@@ -263,12 +282,12 @@ export default function ContentLayoutComponent() {
                                                 setSelectedOption(detail.selectedOption)
                                             }
                                             options={[
-                                                { label: "Áo S", value: "1" },
-                                                { label: "Áo M", value: "2" },
-                                                { label: "Áo L", value: "3" },
-                                                { label: "Áo XL", value: "4" },
-                                                { label: "Áo 2XL", value: "5" },
-                                                { label: "Áo 3XL", value: "6" },
+                                                { label: "Size S (48kg - 54kg", value: "1" },
+                                                { label: "Size M (55kg - 61kg)", value: "2" },
+                                                { label: "Size L (62kg - 68kg)", value: "3" },
+                                                { label: "Size XL (69kg - 75kg)", value: "4" },
+                                                { label: "Size 2XL (76kg - 82kg)", value: "5" },
+                                                { label: "Size 3XL (85kg - 90kg)", value: "6" },
                                             ]}
                                             disabled={value !== "gift-items"}
                                         />

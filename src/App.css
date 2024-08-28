@@ -36,6 +36,52 @@
     padding: 10px;
     align-items: center;
   }
+
+  .header-container {
+    background-image: url('/public/images/4.png');
+    /* Set your image URL here */
+    background-size: cover;
+    background-position: center;
+    padding-left: 18px;
+    padding-top: 80px;
+    padding-right: 18px;
+    padding-bottom: 190px;
+    align-items: center;
+  }
+
+
+
+  .header-title {
+    font-size: 50px;
+    /* Adjust text size as needed */
+    margin: 0;
+    /* Remove default margins if needed */
+    color: white;
+    line-height: 1;
+    font-weight: 600;
+
+  }
+
+  .sub-title {
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+
+  }
+
+  .header-container p {
+    color: white;
+    /* Ensure description text color */
+  }
+
+  .header-description {
+    font-size: 18px;
+    font-weight: 500;
+
+    /* Adjust text size */
+    color: white;
+    /* Set color for description text */
+  }
 }
 
 /* Styles for desktop screens (min-width: 768px) */
@@ -78,5 +124,45 @@
 
   .alert {
     padding: 20px;
+  }
+
+  .header-container {
+    background-image: url('/public/images/4.png');
+    /* Set your image URL here */
+    background-size: cover;
+    background-position: center;
+    padding: 100px;
+    /* Adjust padding if needed */
+    color: white;
+    /* Ensure text is readable */
+    text-align: center;
+    /* Center align text if needed */
+  }
+
+  .header-title {
+    font-size: 36px;
+    /* Adjust text size as needed */
+    margin: 0;
+    /* Remove default margins if needed */
+    color: white;
+  }
+
+  .header-container p {
+    color: white;
+    /* Ensure description text color */
+  }
+
+  .header-description {
+    font-size: 16px;
+    /* Adjust text size */
+    color: white;
+    /* Set color for description text */
+  }
+
+  .sub-title {
+    color: white;
+    font-size: 32px;
+    font-weight: 500;
+
   }
 }
