@@ -6,14 +6,14 @@ const awsmobile = {
     "aws_cloud_logic_custom": [
         {
             "name": "api1c7f3d57",
-            "endpoint": "https://tlbj3t7t6g.execute-api.us-east-1.amazonaws.com/dev",
+            "endpoint": "https://fqwx6npcm8.execute-api.us-east-1.amazonaws.com/main",
             "region": "us-east-1"
         }
     ],
     "aws_dynamodb_all_tables_region": "us-east-1",
     "aws_dynamodb_table_schemas": [
         {
-            "tableName": "formtable-dev",
+            "tableName": "formtable-main",
             "region": "us-east-1"
         }
     ]

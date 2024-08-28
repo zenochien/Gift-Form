@@ -13,8 +13,7 @@ import Select from "@cloudscape-design/components/select";
 import Alert from "@cloudscape-design/components/alert";
 import { Box } from "@cloudscape-design/components";
 
-import { get, post } from 'aws-amplify/api';
-import * as e from 'express';
+import { get, post } from "aws-amplify/api"; //Dấu "" là double quotes
 
 export default function ContentLayoutComponent() {
     const [value, setValue] = React.useState("gift-items");
@@ -28,106 +27,15 @@ export default function ContentLayoutComponent() {
     const [notes, setNotes] = React.useState("");
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null);
-    const [registeredEmails, setRegisteredEmails] = React.useState([]);
+    // const [registeredEmails, setRegisteredEmails] = React.useState([]);
     const [selectedItemName, setSelectedItemName] = React.useState("Áo FCJ");
     const [selectedImage, setSelectedImage] = React.useState("/images/1.png");
 
     // Create a ref for the form container
     const formRef = useRef(null);
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     const newErrors = {};
-
-    //     if (!name) {
-    //         newErrors.name = "Bắt buộc Họ và tên";
-    //     }
-    //     if (!phone) {
-    //         newErrors.phone = "Bắt buộc số điện thoại";
-    //     }
-    //     if (!email) {
-    //         newErrors.email = "Bắt buộc email";
-    //     }
-
-    //     if (Object.keys(newErrors).length > 0) {
-    //         setErrors(newErrors);
-    //     }
-
-    //     else {
-    //         // Perform the POST request
-    //         try {
-    //             const dataPost = post({
-    //                 apiName: 'api1c7f3d57',
-    //                 path: '/items',
-    //                 options: {
-    //                     method: 'POST',
-    //                     body: {
-    //                         name: name,
-    //                         phone: phone,
-    //                         email: email,
-    //                         notes: notes,
-    //                         size: selectedOption.label,
-    //                         selectedItemName: selectedItemName,
-    //                         selectedImage: selectedImage
-    //                     }
-    //                 }
-    //             });
-
-    //             const responsePost = await dataPost.response;
-
-    //             console.log('POST call succeeded');
-    //             console.log(responsePost);
-    //         } catch (e) {
-    //             console.log('POST call failed: ', e);
-    //         }
-
-    //         try {
-    //             const existingEmail = get({
-    //                 apiName: 'api1c7f3d57',
-    //                 path: '/items',
-    //                 options: {
-    //                     queryParams: {
-    //                         email: email
-    //                     }
-    //                 }
-    //             });
-
-    //             // setRegisteredEmails(existingEmail);
-
-    //             const responseGET = await existingEmail.response;
-
-    //             console.log('GET call succeeded: ', responseGET);
-
-
-    //         } catch (e) {
-    //             console.log('GET call failed: ', e);
-    //         }
-
-    //         if (registeredEmails.includes(email)) {
-    //             setAlert({
-    //                 type: "error",
-    //                 header: "Đăng ký không thành công",
-    //                 content: "Email này đã được đăng ký.",
-    //             });
-    //         } else {
-    //             // Register the email and reset the form
-    //             setRegisteredEmails((prev) => [...prev, email]);
-    //             setName("");
-    //             setphone("");
-    //             setEmail("");
-    //             setNotes("");
-    //             setAlert({
-    //                 type: "success",
-    //                 header: "Đăng ký thành công",
-    //                 content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
-    //             });
-    //         }
-
-    //         setErrors({});
-    //     }
-    // };
-
     const handleSubmit = async (event) => {
+        event.preventDefault();
         const newErrors = {};
 
         if (!name) {
@@ -142,84 +50,73 @@ export default function ContentLayoutComponent() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-        }
+        } else {
+            //Check email exist or not
+            try {
 
-        try {
-
-            // Check for existing email
-            const response = await getEmail(email);
-            if (response) {
-                setAlert({
-                    type: "error",
-                    header: "Đăng ký không thành công",
-                    content: "Email này đã được đăng ký.",
+                // Hàm GET lấy đối tượng từ DB, GET từ API truy vấn email 
+                const existingEmail = get({
+                    apiName: "api1c7f3d57",
+                    path: "/items",
+                    options: {
+                        queryParams: {
+                            email: email,
+                        },
+                    },
                 });
+                const { body } = await existingEmail.response; // body trích xuất từ existingEmail.response
+                const json = await body.json(); // dạng JSON, Object khai báo thông tin
+                console.log(json);
+                // If email existed
+                // Object trả về mảng DB tất cả email, nếu lenght > 0 mà kiểm tra so sanh email
+                if (Object.keys(json).length > 0) {
+                    setAlert({
+                        type: "error",
+                        header: "Đăng ký không thành công",
+                        content: "Email này đã được đăng ký.",
+                    });
+                } else {  // if not
+                    // Perform the POST request
+                    // Khai báo thông tin
+                    const dataPost = post({
+                        apiName: "api1c7f3d57",
+                        path: "/items",
+                        options: {
+                            method: "POST",
+                            body: {
+                                name: name,
+                                phone: phone,
+                                email: email,
+                                notes: notes,
+                                size: selectedOption.label,
+                                selectedItemName: selectedItemName,
+                                selectedImage: selectedImage,
+                            },
+                        },
+                    });
+
+                    const responsePost = await dataPost.response; //Lấy trích xuất dataPost.response 
+                    console.log("POST call succeeded"); //Kiếm tra Post lên DB 
+                    console.log(responsePost); //Kiểm tra đối tượng
+
+                    // Làm mới form sau khi đăng ký thành công
+                    setName("");
+                    setphone("");
+                    setEmail("");
+                    setNotes("");
+                    setAlert({
+                        type: "success",
+                        header: "Đăng ký thành công",
+                        content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
+                    });
+                }
+            } catch (e) {
+                console.log("GET call failed: ", e);
             }
 
-            // Post data
-            const postResponse = await postData(name, phone, email, notes, selectedOption, selectedItemName, selectedImage);
-
-            // Update registerd email
-            setRegisteredEmails((prev) => [...prev, email]);
-
-            //Show success message 
-            setAlert({
-                type: "success",
-                header: "Đăng ký thành công",
-                content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
-            });
-
-            // Rest form
-            setName("");
-            setphone("");
-            setEmail("");
-            setNotes("");
-        } catch {
-            console.log("POST call failed")
+            setErrors({});
         }
-
-    }
-
-    async function getEmail(email) {
-        try {
-            const response = get({
-                apiName: 'api1c7f3d57',
-                path: '/items',
-                options: {
-                    queryParams: {
-                        email: email
-                    }
-                }
-            });
-            return response;
-        } catch (e) {
-            console.log('GET call failed: ', e);
-        }
-    }
-
-    async function postData(name, phone, email, notes, selectedOption, selectedItemName, selectedImage) {
-        try {
-            const response = post({
-                apiName: 'api1c7f3d57',
-                path: '/items',
-                options: {
-                    method: 'POST',
-                    body: {
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        notes: notes,
-                        size: selectedOption.label,
-                        selectedItemName: selectedItemName,
-                        selectedImage: selectedImage
-                    }
-                }
-            });
-            return response;
-        } catch (e) {
-            console.log('POST call failed: ', e);
-        }
-    }
+    };
 
     const handleTileChange = ({ detail }) => {
         setValue(detail.value);
@@ -249,16 +146,22 @@ export default function ContentLayoutComponent() {
                 headerBackgroundStyle="linear-gradient(135deg, rgb(71, 17, 118) 3%, rgb(131, 57, 157) 44%, rgb(149, 85, 182) 69%, rgb(145, 134, 215) 94%)"
                 headerVariant="high-contrast"
                 maxContentWidth={800}
-                header={<Header variant="h1" description="18, September 2024 | JW Marriott Hotel Hanoi">Cloud Day Vietnam Gift</Header>}
-            >
-            </ContentLayout>
+                header={
+                    <Header
+                        variant="h1"
+                        description="18, September 2024 | JW Marriott Hotel Hanoi"
+                    >
+                        Cloud Day Vietnam Gift
+                    </Header>
+                }
+            ></ContentLayout>
             <Box className="header-content" variant="h1" padding={{ top: "m" }}>
                 Gift from First Cloud Journey
             </Box>
             <div className="content-container">
                 <div className="tiles-container">
                     <Tiles
-                        onChange={handleTileChange}  // Use handleTileChange to trigger scroll
+                        onChange={handleTileChange} // Use handleTileChange to trigger scroll
                         className="tile"
                         value={value}
                         ariaRequired
@@ -381,9 +284,7 @@ export default function ContentLayoutComponent() {
 
                                     {/* Display selected image and item name */}
                                     <FormField label="Quà tặng đã chọn">
-                                        <Box variant="h3">
-                                            {selectedItemName}
-                                        </Box>
+                                        <Box variant="h3">{selectedItemName}</Box>
                                         <img
                                             src={selectedImage}
                                             alt={selectedItemName}

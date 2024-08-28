@@ -10,29 +10,13 @@
       "StackName": "amplify-giftform-main-7dba1",
       "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-giftform-main-7dba1/a42abdd0-6376-11ef-baf8-0eba9e8dff93",
       "AmplifyAppId": "d2h9njfw11k73z"
-    }
-  },
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-formgift-dev-e186f-authRole",
-      "UnauthRoleArn": "arn:aws:iam::992382405090:role/amplify-formgift-dev-e186f-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::992382405090:role/amplify-formgift-dev-e186f-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-formgift-dev-e186f-deployment",
-      "UnauthRoleName": "amplify-formgift-dev-e186f-unauthRole",
-      "StackName": "amplify-formgift-dev-e186f",
-      "StackId": "arn:aws:cloudformation:us-east-1:992382405090:stack/amplify-formgift-dev-e186f/7269c9f0-636f-11ef-b62c-0affcf39faf1",
-      "AmplifyAppId": "d2h9njfw11k73z"
     },
     "categories": {
       "function": {
         "formgift037b1558": {
-          "deploymentBucketName": "amplify-formgift-dev-e186f-deployment",
-          "s3Key": "amplify-builds/formgift037b1558-774a62645257592f2b2f-build.zip"
+          "deploymentBucketName": "amplify-giftform-main-7dba1-deployment",
+          "s3Key": "amplify-builds/formgift037b1558-46744f332f3367307870-build.zip"
         }
-      },
-      "api": {
-        "api1c7f3d57": {}
       },
       "storage": {
         "formtable": {}
