@@ -247,10 +247,10 @@ export default function ContentLayoutComponent() {
                             }
                         >
                             <Container
-                                header={<Header variant="h2">Form Thông tin nhận quà</Header>}
+                                header={<Header variant="h2" description="Form Gifts">Form Thông tin nhận quà</Header>}
                             >
                                 <SpaceBetween direction="vertical" size="l">
-                                    <FormField label="Họ và tên" errorText={errors.name}>
+                                    <FormField label="Họ và tên" description="Please enter your full name" errorText={errors.name}>
                                         <Input
                                             value={name}
                                             onChange={({ detail }) => setName(detail.value)}
@@ -258,7 +258,7 @@ export default function ContentLayoutComponent() {
                                             ariaRequired
                                         />
                                     </FormField>
-                                    <FormField label="Số điện thoại" errorText={errors.phone}>
+                                    <FormField label="Số điện thoại" description="Please enter your phone number" errorText={errors.phone}>
                                         <Input
                                             value={phone}
                                             onChange={({ detail }) => setphone(detail.value)}
@@ -266,7 +266,7 @@ export default function ContentLayoutComponent() {
                                             ariaRequired
                                         />
                                     </FormField>
-                                    <FormField label="Email" errorText={errors.email}>
+                                    <FormField label="Email" description="Please enter your email address" errorText={errors.email}>
                                         <Input
                                             value={email}
                                             type="email"
@@ -275,25 +275,25 @@ export default function ContentLayoutComponent() {
                                             ariaRequired
                                         />
                                     </FormField>
-                                    <FormField label="Size áo">
+                                    <FormField label="Size áo" description="Please select your preferred T-shirt size">
                                         <Select
                                             selectedOption={selectedOption}
                                             onChange={({ detail }) =>
                                                 setSelectedOption(detail.selectedOption)
                                             }
                                             options={[
-                                                { label: "Size S (48kg - 54kg", value: "1" },
-                                                { label: "Size M (55kg - 61kg)", value: "2" },
-                                                { label: "Size L (62kg - 68kg)", value: "3" },
-                                                { label: "Size XL (69kg - 75kg)", value: "4" },
-                                                { label: "Size 2XL (76kg - 82kg)", value: "5" },
-                                                { label: "Size 3XL (85kg - 90kg)", value: "6" },
+                                                { label: "Áo S", value: "1" },
+                                                { label: "Áo M", value: "2" },
+                                                { label: "Áo L", value: "3" },
+                                                { label: "Áo XL", value: "4" },
+                                                { label: "Áo 2XL", value: "5" },
+                                                { label: "Áo 3XL", value: "6" },
                                             ]}
                                             disabled={value !== "gift-items"}
                                         />
                                     </FormField>
 
-                                    <FormField label="Ghi chú">
+                                    <FormField label="Ghi chú" description="Any additional thoughts or special requests?">
                                         <Textarea
                                             value={notes}
                                             onChange={({ detail }) => setNotes(detail.value)}
@@ -302,7 +302,7 @@ export default function ContentLayoutComponent() {
                                     </FormField>
 
                                     {/* Display selected image and item name */}
-                                    <FormField label="Quà tặng đã chọn">
+                                    <FormField label="Quà tặng đã chọn" description="Selected your gifts">
                                         <Box variant="h3">{selectedItemName}</Box>
                                         <img
                                             src={selectedImage}
