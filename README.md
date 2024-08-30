@@ -32,7 +32,7 @@ amplify add api
 ```
 ? Please provide a name for the function: MyRestFunction
 ```
-5. Function template: Choose a template for your function. For a simple REST API, select the "ExpressJS function" template. 
+5. **Function template:** Choose a template for your function. For a simple REST API, select the "ExpressJS function" template. 
 ```
 ? Select from one of the below mentioned options: 
 ❯ Serverless ExpressJS function
@@ -92,7 +92,135 @@ amplify add storage
 ? Do you want to configure Lambda triggers for this table? (Y/n) no
 ```
 
-**Step 6: Deploy**
+**Step 9:** Deploy
 ```
 amplify push
+```
+
+**Step 10:** At the end of this command you can verify the routes and respective in the ``app.mjs`` file at the following path.
+
+```
+<project-root>/amplify/backend/function/<lamdba-resource-name>/src/app.mjs
+```
+
+**Step 11:** Backend function for retrieving an item from a DynamoDB table
+
+```
+const getInput = {
+  TableName: tableName,
+  Key: params,
+};
+// The try block attempts to fetch the item using ddbDocClient.send(new GetCommand(getInput))
+// If the item exists (data.Item), it returns the item as a JSON response.
+// If the item does not exist, it returns an empty object.
+// If an error occurs during the fetch operation, it logs the error and responds with a 500 status code and an error message.
+
+try {
+  const data = await ddbDocClient.send(new GetCommand(getInput));
+  if (data.Item) {
+    res.json(data.Item);
+  } else {
+    res.json({});
+  }
+} catch (err) {
+  console.log(err);
+  res.statusCode = 500;
+  res.json({ error: 'Could not load items: ' + err.message });
+}
+```
+
+***Step 12:** 
+
+```
+const handleSubmit = async (event) => {
+    // This prevents the default form submission behavior. 
+        event.preventDefault();
+        const newErrors = {};
+
+        if (!name) {
+            newErrors.name = "Bắt buộc Họ và tên";
+        }
+        if (!phone) {
+            newErrors.phone = "Bắt buộc số điện thoại";
+        }
+        if (!email) {
+            newErrors.email = "Bắt buộc email";
+        }
+
+        // Async/Await for GET Request: Ensure that the email check is awaited properly.
+        // Error Handling: Improve error handling for both GET and POST requests.
+        // Code Organization: Consider breaking this function into smaller helper functions for readability.
+        // State Management: Use setErrors and setAlert consistently to clear previous states.
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        } else {
+            //Check email exist or not
+            try {
+                const existingEmail = get({
+                    apiName: "api1c7f3d57",
+                    path: "/items",
+                    options: {
+                        queryParams: {
+                            email: email,
+                        },
+                    },
+                });
+                const { body } = await existingEmail.response;
+                const json = await body.json();
+                console.log(json);
+                // If email existed
+                if (Object.keys(json).length > 0) {
+                    setAlert({
+                        type: "error",
+                        header: "Đăng ký không thành công",
+                        content: "Email này đã được đăng ký.",
+                    });
+                } else {  // if not
+                    // Perform the POST request
+
+                    const dataPost = post({
+                        apiName: "api1c7f3d57",
+                        path: "/items",
+                        options: {
+                            method: "POST",
+                            body: {
+                                name: name,
+                                phone: phone,
+                                email: email,
+                                notes: notes,
+                                size: selectedOption.label,
+                                selectedItemName: selectedItemName,
+                                selectedImage: selectedImage,
+                            },
+                        },
+                    });
+
+                    const responsePost = await dataPost.response;
+                    console.log("POST call succeeded");
+                    console.log(responsePost);
+
+                    setName("");
+                    setphone("");
+                    setEmail("");
+                    setNotes("");
+                    setAlert({
+                        type: "success",
+                        header: "Đăng ký thành công",
+                        content: `Bạn đã đăng ký thành công với quà tặng: ${selectedItemName}`,
+                    });
+                }
+            } catch (e) {
+                console.log("GET call failed: ", e);
+            }
+
+            setErrors({});
+        }
+    };
+```
+**Step 13:** After completing the prompts, the CLI will show a summary of your API configuration. Confirm to proceed:
+
+```
+amplify push
+? Do you want to configure advanced settings? (Y/n) Yes
 ```
