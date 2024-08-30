@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+#### AWS Amplify on deploy guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Step 1:** Install the Amplify CLI
+```bash
+npm install -g @aws-amplify/cli
+```
 
-## Available Scripts
+**Step 2:** Initialize Your Project
+```bash
+cd your-project-directory
+amplify init
+``` 
 
-In the project directory, you can run:
+**Step 3:** Add Features
+```bash
+amplify add api
+```
+- Choose REST that the prompts to set up REST API
+1. **Name the API:** Provide a name for your API.
+```
+? Please provide a name for the API: MyRestApi
+```
+2. **Path:** Specify the path for your API. 
+```
+? Please provide a path (e.g., /items): /items
+```
+3. **Lambda Function:** You can create a new Lambda function or use an existing one. Choose to create a new one: 
+```
+? Choose a Lambda source: Create a new Lambda function
+```
+4. **Function Name:** Give your Lambda function a name.
+```
+? Please provide a name for the function: MyRestFunction
+```
+5. Function template: Choose a template for your function. For a simple REST API, select the "ExpressJS function" template. 
+```
+? Select from one of the below mentioned options: 
+❯ Serverless ExpressJS function
 
-### `npm start`
+Do you want to configure advanced settings? No
+$> ? Do you want to edit the local lambda function now? No
+Successfully added resource bookGuestHandler locally.
+$> ✔ Restrict API access? (Y/n) · No
+$> ✔ Do you want to add another path? (y/N) No
+? Do you want to configure advanced settings? (Y/n) no
+✅ Successfully added resource mybookapi locally
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Step 4:** Add Storage
+```bash
+amplify add storage
+```
+**Step 5:** Choose Storage Type
+```
+? Please select from one of the below mentioned services: 
+  (Use arrow keys)
+❯ NoSQL Database (DynamoDB)
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Step 6:** Configure Table
+1. **Table name:** Enter a name for your DynamoDB table. 
+```
+? Please provide a name for the table: myTableName
+```
+2. **Primary key:** Specify the primary key for the table. 
+```
+? Please provide a name for your partition key: email
+```
+3. **Data type for the partition key:** Choose the data type for your primary key. 
+```
+? Please select a data type for the partition key: 
+❯ String
+  Number
+  Binary
+```
 
-### `npm test`
+4. **Add data type for DynamoDB:** name - String, phone - String, notes - String, size - String, selectName - String, selectNameImage - String
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. **Sort key (optional):** If you want to add a sort key, specify its name and type; otherwise, just skip this step.
 
-### `npm run build`
+6. **Additional attributes (optional):** You can add more attributes or leave it empty. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Step 7:** Configure Table Settings: Enable or disable the "**Searchable**" option: Decide if you want to enable this feature.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+? Do you want to add a Global Secondary Index (GSI)? (Y/n) no
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Step 8:** Finalize the Configuration
 
-### `npm run eject`
+```
+? Do you want to configure Lambda triggers for this table? (Y/n) no
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Step 6: Deploy**
+```
+amplify push
+```
