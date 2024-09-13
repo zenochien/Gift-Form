@@ -1,4 +1,8 @@
-#### AWS Amplify on deploy guide
+## AWS Amplify on deploy guide
+
+#### A Complete Guide with AWS Amplify, DynamoDB, Lambda and API Gateway
+
+
 
 **Step 1:** Install the Amplify CLI
 ```bash

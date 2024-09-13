@@ -282,12 +282,12 @@ export default function ContentLayoutComponent() {
                                                 setSelectedOption(detail.selectedOption)
                                             }
                                             options={[
-                                                { label: "Áo S", value: "1" },
-                                                { label: "Áo M", value: "2" },
-                                                { label: "Áo L", value: "3" },
-                                                { label: "Áo XL", value: "4" },
-                                                { label: "Áo 2XL", value: "5" },
-                                                { label: "Áo 3XL", value: "6" },
+                                                { label: "Áo S (48kg-54kg)", value: "1" },
+                                                { label: "Áo M (55kg-61kg)", value: "2" },
+                                                { label: "Áo L (62kg-68kg)", value: "3" },
+                                                { label: "Áo XL (69kg-75kg)", value: "4" },
+                                                { label: "Áo 2XL (76kg-84kg)", value: "5" },
+                                                { label: "Áo 3XL (85kg-90kg)", value: "6" },
                                             ]}
                                             disabled={value !== "gift-items"}
                                         />
