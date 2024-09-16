@@ -132,7 +132,7 @@ export default function ContentLayoutComponent() {
             setSelectedImage("/images/1.png");
         } else if (detail.value === "item2") {
             setSelectedItemName("Bình nước First Cloud Journey");
-            setSelectedImage("/images/2.png");
+            setSelectedImage("/images/5.png");
         } else if (detail.value === "item3") {
             setSelectedItemName("Nón First Cloud Journey");
             setSelectedImage("/images/3.png");
@@ -200,7 +200,7 @@ export default function ContentLayoutComponent() {
                                 label: "Bình nước First Cloud Journey",
                                 image: (
                                     <img
-                                        src="/images/2.png"
+                                        src="/images/5.png"
                                         alt="Bình nước First Cloud Journey"
                                         className="tiles-item"
                                     />
@@ -293,11 +293,11 @@ export default function ContentLayoutComponent() {
                                         />
                                     </FormField>
 
-                                    <FormField label="Ghi chú" description="Any additional thoughts or special requests?">
+                                    <FormField label="Địa chỉ" description="Please fill in the address or notes if you need!">
                                         <Textarea
                                             value={notes}
                                             onChange={({ detail }) => setNotes(detail.value)}
-                                            placeholder="Ghi chú"
+                                            placeholder="Hãy điền địa chỉ hoặc ghi chú nếu bạn cần."
                                         />
                                     </FormField>
 
