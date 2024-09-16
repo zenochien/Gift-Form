@@ -25,6 +25,7 @@ export default function ContentLayoutComponent() {
     const [phone, setphone] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [notes, setNotes] = React.useState("");
+    const [address, setAddress] = React.useState("");
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null);
     const [registeredEmails, setRegisteredEmails] = React.useState([]);
@@ -46,6 +47,10 @@ export default function ContentLayoutComponent() {
         }
         if (!email) {
             newErrors.email = "Bắt buộc email";
+        }
+
+        if (!address) {
+            newErrors.address = "Bắt buộc địa chỉ";
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -79,7 +84,6 @@ export default function ContentLayoutComponent() {
                     });
                 } else {  // if not
                     // Perform the POST request
-
                     // post gửi yêu cầu đến /items, dữ liệu (payload) chưa thông tin về DB
                     // dataPost chứa kết quả của việc gọi API POST
                     // responsePost trích xuất phản hồi từ kết quả API sau khi y/c thực hiệu success
@@ -93,6 +97,7 @@ export default function ContentLayoutComponent() {
                                 name: name,
                                 phone: phone,
                                 email: email,
+                                address: address,
                                 notes: notes,
                                 size: selectedOption.label,
                                 selectedItemName: selectedItemName,
@@ -131,7 +136,7 @@ export default function ContentLayoutComponent() {
             setSelectedItemName("Áo First Cloud Journey");
             setSelectedImage("/images/1.png");
         } else if (detail.value === "item2") {
-            setSelectedItemName("Bình nước First Cloud Journey");
+            setSelectedItemName("Túi First Cloud Journey");
             setSelectedImage("/images/5.png");
         } else if (detail.value === "item3") {
             setSelectedItemName("Nón First Cloud Journey");
@@ -197,11 +202,11 @@ export default function ContentLayoutComponent() {
                                 value: "gift-items",
                             },
                             {
-                                label: "Bình nước First Cloud Journey",
+                                label: "Túi First Cloud Journey",
                                 image: (
                                     <img
                                         src="/images/5.png"
-                                        alt="Bình nước First Cloud Journey"
+                                        alt="Túi First Cloud Journey"
                                         className="tiles-item"
                                     />
                                 ),
@@ -293,11 +298,20 @@ export default function ContentLayoutComponent() {
                                         />
                                     </FormField>
 
-                                    <FormField label="Địa chỉ" description="Please fill in the address or notes if you need!">
+                                    <FormField label="Địa chỉ" description="Please enter your home address" errorText={errors.address}>
+                                        <Input
+                                            value={address}
+                                            onChange={({ detail }) => setAddress(detail.value)}
+                                            required
+                                            ariaRequired
+                                        />
+                                    </FormField>
+
+                                    <FormField label="Note" description="Any additional thoughts or special requests?">
                                         <Textarea
                                             value={notes}
                                             onChange={({ detail }) => setNotes(detail.value)}
-                                            placeholder="Hãy điền địa chỉ hoặc ghi chú nếu bạn cần."
+                                            placeholder="Ghi chú"
                                         />
                                     </FormField>
 
