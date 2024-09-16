@@ -16,6 +16,7 @@ import { Box } from "@cloudscape-design/components";
 import { get, post } from "aws-amplify/api";
 
 export default function ContentLayoutComponent() {
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [value, setValue] = React.useState("gift-items");
     const [selectedOption, setSelectedOption] = React.useState({
         label: "",
@@ -56,6 +57,8 @@ export default function ContentLayoutComponent() {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
+            setIsSubmitting(true);
+
             //Check email exist or not
             try {
                 // Get gửi yêu câu đến /items, với tham số truy vấn queryParams chỉ email cần kiểm tra
@@ -122,6 +125,8 @@ export default function ContentLayoutComponent() {
                 }
             } catch (e) {
                 console.log("GET call failed: ", e);
+            } finally {
+                setIsSubmitting(false);
             }
 
             setErrors({});
@@ -245,8 +250,8 @@ export default function ContentLayoutComponent() {
                         <Form
                             actions={
                                 <SpaceBetween direction="horizontal" size="xs">
-                                    <Button variant="primary" type="submit">
-                                        Submit
+                                    <Button variant="primary" type="submit" disabled={isSubmitting}>
+                                        {isSubmitting ? "Đang xử lý..." : "Submit"}
                                     </Button>
                                 </SpaceBetween>
                             }
