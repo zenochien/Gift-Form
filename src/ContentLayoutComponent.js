@@ -43,9 +43,14 @@ export default function ContentLayoutComponent() {
         if (!name) {
             newErrors.name = "Bắt buộc Họ và tên";
         }
+
+        const phoneRegex = /^\d{10}$/;
         if (!phone) {
             newErrors.phone = "Bắt buộc số điện thoại";
+        } else if (!phoneRegex.test(phone)) {
+            newErrors.phone = "Số điện thoại phải chứa đúng 10 chữ số";
         }
+
         if (!email) {
             newErrors.email = "Bắt buộc email";
         }
@@ -56,6 +61,7 @@ export default function ContentLayoutComponent() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
+            return;
         } else {
             setIsSubmitting(true);
 
@@ -85,6 +91,8 @@ export default function ContentLayoutComponent() {
                         header: "Đăng ký không thành công",
                         content: "Email này đã được đăng ký.",
                     });
+                    setIsSubmitting(false);
+                    return;
                 } else {  // if not
                     // Perform the POST request
                     // post gửi yêu cầu đến /items, dữ liệu (payload) chưa thông tin về DB
