@@ -48,8 +48,6 @@ const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
 
-const partitionKeyNames = "selectedItemName";
-const partitionKeyTypes = "S";
 const paths = "/inventory";
 
 // declare a new express app
@@ -79,7 +77,7 @@ const convertUrlType = (param, type) => {
 ************************************/
 
 // Khai báo biến params, lấy đối tượng email
-app.get(path, paths, async function (req, res) {
+app.get(path, async function (req, res) {
   var params = {
     email: req.query['email']
   }
