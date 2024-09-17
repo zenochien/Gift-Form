@@ -158,11 +158,6 @@ export default function ContentLayoutComponent() {
         const existingEmail = get({
             apiName: "api1c7f3d57",
             path: "/inventory",
-            options: {
-                queryParams: {
-                    selectedImage: selectedImage,
-                },
-            },
         });
 
         const { body } = await existingEmail.response;
