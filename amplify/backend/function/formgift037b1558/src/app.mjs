@@ -49,8 +49,6 @@ const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
 
-const partitionKeyNames = "selectedItemName";
-const partitionKeyTypes = "S";
 const paths = "/inventory";
 
 // declare a new express app
