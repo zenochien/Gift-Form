@@ -25,6 +25,7 @@ import awsServerlessExpressMiddleware from "aws-serverless-express/middleware.js
 
 const ddbClient = new DynamoDBClient({ region: process.env.TABLE_REGION });
 const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
+const client = new DynamoDBClient();
 
 const TOTAL_INVENTORY = {
   shirts: 100,
@@ -79,7 +80,7 @@ const convertUrlType = (param, type) => {
 ************************************/
 
 // Khai báo biến params, lấy đối tượng email
-app.get(path, paths, async function (req, res) {
+app.get(path, async function (req, res) {
   var params = {
     email: req.query['email']
   }
@@ -106,12 +107,15 @@ app.get(path, paths, async function (req, res) {
 app.get(paths, async function (req, res) {
   try {
     // Scan the table and fetch the registered items
-    const params = {
-      TableName: 'GiftItems',
-      ProjectionExpression: 'selectedItemName',
-    };
+    const command = new ScanCommand({
+      TableName: "GiftItems",
+    });
 
-    const data = await ddbDocClient.scan(params).promise();
+
+    const response = await client.send(command);
+    response.Items.forEach(function (response) {
+      console.log("test", response);
+    })
 
     const itemCount = {
       shirts: 0,
