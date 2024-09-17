@@ -29,9 +29,16 @@ export default function ContentLayoutComponent() {
     const [address, setAddress] = React.useState("");
     const [errors, setErrors] = React.useState({});
     const [alert, setAlert] = React.useState(null);
-    const [registeredEmails, setRegisteredEmails] = React.useState([]);
+
+    const [inventory, setInventory] = React.useState({
+        shirts: 100,
+        bags: 100,
+        hats: 100
+    });
+
     const [selectedItemName, setSelectedItemName] = React.useState("Áo First Cloud Journey");
     const [selectedImage, setSelectedImage] = React.useState("/images/1.png");
+    const [selectedGift, setSelectedGift] = React.useState(null);
 
     // Create a ref for the form container
     const formRef = useRef(null);
@@ -81,9 +88,11 @@ export default function ContentLayoutComponent() {
                         },
                     },
                 });
+
                 const { body } = await existingEmail.response;
                 const json = await body.json();
                 console.log(json);
+
                 // If email existed
                 if (Object.keys(json).length > 0) {
                     setAlert({
@@ -93,7 +102,17 @@ export default function ContentLayoutComponent() {
                     });
                     setIsSubmitting(false);
                     return;
-                } else {  // if not
+                } else {
+
+                    if (selectedGift === "gift-items") {
+                        setInventory(prev => ({ ...prev, shirts: prev.shirts - 1 }));
+                    } else if (selectedGift === "item2") {
+                        setInventory(prev => ({ ...prev, bags: prev.bags - 1 }));
+                    } else if (selectedGift === "item3") {
+                        setInventory(prev => ({ ...prev, hats: prev.hats - 1 }));
+                    }
+
+                    // if not
                     // Perform the POST request
                     // post gửi yêu cầu đến /items, dữ liệu (payload) chưa thông tin về DB
                     // dataPost chứa kết quả của việc gọi API POST
@@ -142,16 +161,31 @@ export default function ContentLayoutComponent() {
     };
 
     const handleTileChange = ({ detail }) => {
-        setValue(detail.value);
+        const selectedValue = detail.value;
+        setValue(selectedValue);
+
+        // Check if the selected item is out of stock
+        if (
+            (selectedValue === "gift-items" && inventory.shirts <= 0) ||
+            (selectedValue === "item2" && inventory.bags <= 0) ||
+            (selectedValue === "item3" && inventory.hats <= 0)
+        ) {
+            setAlert({
+                type: "error",
+                header: "Quà tặng hết hàng",
+                content: "Quà tặng này đã hết hàng, vui lòng chọn quà khác.",
+            });
+            return;
+        }
 
         // Update selected image and item name based on selected tile
-        if (detail.value === "gift-items") {
+        if (selectedValue === "gift-items") {
             setSelectedItemName("Áo First Cloud Journey");
             setSelectedImage("/images/1.png");
-        } else if (detail.value === "item2") {
+        } else if (selectedValue === "item2") {
             setSelectedItemName("Túi First Cloud Journey");
             setSelectedImage("/images/5.png");
-        } else if (detail.value === "item3") {
+        } else if (selectedValue === "item3") {
             setSelectedItemName("Nón First Cloud Journey");
             setSelectedImage("/images/3.png");
         }
@@ -161,6 +195,7 @@ export default function ContentLayoutComponent() {
             formRef.current.scrollIntoView({ behavior: "smooth" });
         }
     };
+
 
     return (
         <>
@@ -213,6 +248,8 @@ export default function ContentLayoutComponent() {
                                     />
                                 ),
                                 value: "gift-items",
+                                disabled: inventory.shirts <= 0 || selectedGift && selectedGift !== "gift-items",
+                                description: inventory.shirts <= 0 ? "Hết hàng" : "",
                             },
                             {
                                 label: "Túi First Cloud Journey",
@@ -224,6 +261,8 @@ export default function ContentLayoutComponent() {
                                     />
                                 ),
                                 value: "item2",
+                                disabled: inventory.bags <= 0 || selectedGift && selectedGift !== "item2",
+                                description: inventory.bags <= 0 ? "Hết hàng" : "",
                             },
                             {
                                 label: "Nón First Cloud Journey",
@@ -235,6 +274,8 @@ export default function ContentLayoutComponent() {
                                     />
                                 ),
                                 value: "item3",
+                                disabled: inventory.hats <= 0 || selectedGift && selectedGift !== "item3",
+                                description: inventory.hats <= 0 ? "Hết hàng" : "",
                             },
                         ]}
                     />

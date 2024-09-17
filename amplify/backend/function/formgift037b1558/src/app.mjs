@@ -26,6 +26,12 @@ import awsServerlessExpressMiddleware from "aws-serverless-express/middleware.js
 const ddbClient = new DynamoDBClient({ region: process.env.TABLE_REGION });
 const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
 
+const TOTAL_INVENTORY = {
+  shirts: 100,
+  bags: 100,
+  hats: 100
+}
+
 let tableName = "formtable";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
@@ -89,6 +95,65 @@ app.get(path, async function (req, res) {
     console.log(err)
     res.statusCode = 500;
     res.json({ error: 'Could not load items: ' + err.message });
+  }
+
+
+  try {
+    // Scan the table and fetch the registered items
+    const params = {
+      TableName: 'GiftItems',
+      ProjectionExpression: 'selectedItemName',
+    };
+
+    const data = await ddb.scan(params).promise();
+
+    const itemCount = {
+      shirts: 0,
+      bags: 0,
+      hats: 0,
+    };
+
+    // Count the number of each item selected by users
+    data.Items.forEach((item) => {
+      switch (item.selectedItemName) {
+        case 'Áo First Cloud Journey':
+          itemCount.shirts += 1;
+          break;
+        case 'Túi First Cloud Journey':
+          itemCount.bags += 1;
+          break;
+        case 'Nón First Cloud Journey':
+          itemCount.hats += 1;
+          break;
+        default:
+          console.warn(`Unexpected item name: ${item.selectedItemName}`);
+          break;
+      }
+    });
+
+    //Calculate remaining inventory
+    const remainingInventory = {
+      shirts: TOTAL_INVENTORY.shirts - itemCount.shirts,
+      bags: TOTAL_INVENTORY.bags - itemCount.bags,
+      hats: TOTAL_INVENTORY.hats - itemCount.hats,
+    }
+    // Return the counts as the response
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(itemCount),
+    };
+  } catch (err) {
+    console.error('Error fetching counts:', err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: 'Error fetching counts' }),
+    };
   }
 });
 
@@ -170,6 +235,8 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, async function (req, res) 
     res.json({ error: 'Could not load items: ' + err.message });
   }
 });
+
+
 
 
 /************************************
