@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import ContentLayout from "@cloudscape-design/components/content-layout";
 import Container from "@cloudscape-design/components/container";
 import Header from "@cloudscape-design/components/header";
@@ -103,15 +103,6 @@ export default function ContentLayoutComponent() {
                     setIsSubmitting(false);
                     return;
                 } else {
-
-                    if (selectedGift === "gift-items") {
-                        setInventory(prev => ({ ...prev, shirts: prev.shirts - 1 }));
-                    } else if (selectedGift === "item2") {
-                        setInventory(prev => ({ ...prev, bags: prev.bags - 1 }));
-                    } else if (selectedGift === "item3") {
-                        setInventory(prev => ({ ...prev, hats: prev.hats - 1 }));
-                    }
-
                     // if not
                     // Perform the POST request
                     // post gửi yêu cầu đến /items, dữ liệu (payload) chưa thông tin về DB
@@ -160,9 +151,23 @@ export default function ContentLayoutComponent() {
         }
     };
 
-    const handleTileChange = ({ detail }) => {
+    const handleTileChange = async ({ detail }) => {
         const selectedValue = detail.value;
         setValue(selectedValue);
+
+        const existingEmail = get({
+            apiName: "api1c7f3d57",
+            path: "/inventory",
+            options: {
+                queryParams: {
+                    selectedImage: selectedImage,
+                },
+            },
+        });
+
+        const { body } = await existingEmail.response;
+        const json = await body.json();
+        console.log(json);
 
         // Check if the selected item is out of stock
         if (

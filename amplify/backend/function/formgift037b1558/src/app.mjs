@@ -48,6 +48,10 @@ const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
 
+const partitionKeyNames = "selectedItemName";
+const partitionKeyTypes = "S";
+const paths = "/inventory";
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -75,7 +79,7 @@ const convertUrlType = (param, type) => {
 ************************************/
 
 // Khai báo biến params, lấy đối tượng email
-app.get(path, async function (req, res) {
+app.get(path, paths, async function (req, res) {
   var params = {
     email: req.query['email']
   }
@@ -96,8 +100,10 @@ app.get(path, async function (req, res) {
     res.statusCode = 500;
     res.json({ error: 'Could not load items: ' + err.message });
   }
+});
 
-
+// Inventory
+app.get(paths, async function (req, res) {
   try {
     // Scan the table and fetch the registered items
     const params = {
@@ -105,7 +111,7 @@ app.get(path, async function (req, res) {
       ProjectionExpression: 'selectedItemName',
     };
 
-    const data = await ddb.scan(params).promise();
+    const data = await ddbDocClient.scan(params).promise();
 
     const itemCount = {
       shirts: 0,
@@ -143,7 +149,9 @@ app.get(path, async function (req, res) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(itemCount),
+      body: JSON.stringify(
+        itemCount,
+        remainingInventory,),
     };
   } catch (err) {
     console.error('Error fetching counts:', err);
